@@ -1,0 +1,3 @@
+New-PSUEnvironment -Name "Integrated" -Version "7.2.5" -Path "Universal.Server" -Modules @('System.Collections.Generic.List1[System.String]') -Variables @('*') -PSModulePath @('System.Collections.Generic.List1[System.String]') 
+New-PSUEnvironment -Name "pwsh" -Version "7.2.5" -Path "pwsh.exe" -Modules @('System.Collections.Generic.List1[System.String]') -Variables @('*') -PSModulePath @('System.Collections.Generic.List1[System.String]') 
+New-PSUEnvironment -Name "5.1" -Version "5.1.22000.829" -Path "powershell.exe" -Modules @('System.Collections.Generic.List1[System.String]') -Variables @('*') -PSModulePath @('System.Collections.Generic.List1[System.String]') 

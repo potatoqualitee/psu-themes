@@ -1,0 +1,1 @@
+﻿New-PSUPublishedFolder -RequestPath "/assets" -Path "C:\source\UA\Repository\dashboards\kbupdate\assets"

@@ -1,0 +1,65 @@
+[
+  {
+    "Category": null,
+    "Label": "Home",
+    "Redirect": "/",
+    "Icon": "home",
+    "Enabled": true
+  },
+  {
+    "Category": null,
+    "Label": "Elements",
+    "Redirect": "/elements",
+    "Icon": "star",
+    "Enabled": true
+  },
+  {
+    "Category": null,
+    "Label": "Server Inventory",
+    "Redirect": "/inventory",
+    "Icon": "server",
+    "Enabled": true
+  },
+  {
+    "Category": null,
+    "Label": "Patching",
+    "Redirect": "/patching",
+    "Icon": "upload",
+    "Enabled": true
+  },
+  {
+    "Category": "Settings",
+    "Label": "General",
+    "Redirect": "/settings/general",
+    "Icon": "cubes",
+    "Enabled": true
+  },
+  {
+    "Category": "Settings",
+    "Label": "Active Directory",
+    "Redirect": "/settings/active-directory",
+    "Icon": "user_plus",
+    "Enabled": true
+  },
+  {
+    "Category": "Settings",
+    "Label": "Configuration",
+    "Redirect": "/settings/config",
+    "Icon": "cog",
+    "Enabled": true
+  },
+  {
+    "Category": "Settings",
+    "Label": "Sidebar",
+    "Redirect": "/settings/sidebar",
+    "Icon": "bars",
+    "Enabled": true
+  },
+  {
+    "Category": "Settings",
+    "Label": "Supported Icons",
+    "Redirect": "/icons",
+    "Icon": "icons",
+    "Enabled": true
+  }
+]

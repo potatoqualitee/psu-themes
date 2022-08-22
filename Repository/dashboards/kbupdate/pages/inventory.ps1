@@ -1,0 +1,1 @@
+New-UDPage -Name "Server Inventory" -Url inventory -Content { }
