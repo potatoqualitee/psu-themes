@@ -12,5 +12,6 @@ jobs:
         shell: bash
         run: |
           npm install -D @playwright/test
+          npm install playwright
           node ./tests/download-json.js
           ls
