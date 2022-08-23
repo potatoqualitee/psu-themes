@@ -1,4 +1,6 @@
 on: [push]
+defaults:
+  shell: pwsh
 
 jobs:
   run-on-linux:
@@ -15,3 +17,10 @@ jobs:
           npx --yes playwright install --with-deps chromium
           npm install -g playwright
           touch /tmp/installed
+
+      - name: Execute json downloader
+        shell: bash
+        run: |
+          npm install -g playwright
+          node ./tests/download-json.js
+          ls
