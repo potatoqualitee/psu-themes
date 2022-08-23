@@ -11,6 +11,6 @@ jobs:
       - name: Execute json downloader
         shell: bash
         run: |
-          npm install -g playwright
+          npm install -D @playwright/test
           node ./tests/download-json.js
           ls
