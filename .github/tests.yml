@@ -21,5 +21,4 @@ jobs:
       - name: Execute json downloader
         shell: bash
         run: |
-          #node ./tests/download-json.js
-          #ls
+          ls
