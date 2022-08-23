@@ -14,9 +14,9 @@ jobs:
       - name: Install playwright
         shell: bash
         run: |
-          npm install -g playwright
-          npm i -D @playwright
+          npm install @playwright/test
           npx --yes playwright install --with-deps chromium
+          #npm install -g playwright
 
       - name: Execute json downloader
         shell: bash
