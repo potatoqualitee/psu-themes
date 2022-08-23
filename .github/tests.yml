@@ -8,10 +8,3 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: potatoqualitee/ogimage@v1.0
-
-      - name: Execute json downloader
-        shell: bash
-        run: |
-          npm install -g playwright
-          node ./tests/download-json.js
-          ls
