@@ -1,0 +1,24 @@
+on: [push]
+
+jobs:
+  run-on-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: lts/*
+
+      - name: Install playwright
+        shell: bash
+        run: |
+          npx --yes playwright install --with-deps chromium
+          npm install -g playwright
+          touch /tmp/installed
+
+      - name: Execute json downloader
+        shell: bash
+        run: |
+          npx --yes playwright install --with-deps chromium
+          node ./tests/download-json.js
+          ls
