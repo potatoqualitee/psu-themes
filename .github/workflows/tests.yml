@@ -5,13 +5,20 @@ jobs:
   run-on-linux:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: potatoqualitee/ogimage@v1.0
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: lts/*
 
-      - name: Execute json downloader
-        shell: bash
-        run: |
-          npm install -D @playwright/test
-          npm install playwright
-          node ./tests/download-json.js
-          ls
+    - name: Install platwright
+      shell: bash
+      run: |
+        npx --yes playwright install --with-deps chromium
+        npm install -D @playwright/test
+        npm install playwright
+
+    - name: Execute json downloader
+      shell: bash
+      run: |
+        node ./tests/download-json.js
+        ls
