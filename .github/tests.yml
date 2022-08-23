@@ -7,14 +7,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: nikeee/setup-pandoc@v1
-      - uses: actions/setup-node@v3
-        with:
-          node-version: lts/*
+      - uses: potatoqualitee/ogimage@v1.0
 
-      - name: Install
-        shell: pwsh
+      - name: Execute json downloader
+        shell: bash
         run: |
-          npx --yes playwright install --with-deps chromium
-          sudo apt-get install -y optipng
-          touch /tmp/installed
+          npm install -g playwright
+          node ./tests/download-json.js
+          ls
