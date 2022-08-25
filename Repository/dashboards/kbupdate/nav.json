@@ -39,7 +39,7 @@
     "Label": "Active Directory",
     "Redirect": "/settings/active-directory",
     "Icon": "user_plus",
-    "Enabled": true
+    "Enabled": false
   },
   {
     "Category": "Settings",
