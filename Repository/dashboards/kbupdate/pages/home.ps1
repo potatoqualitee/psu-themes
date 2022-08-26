@@ -89,7 +89,7 @@ New-UDPage -Name Sample -Url / -Content {
                             New-UDElement -Tag 'div' -Content {
                                 New-UDProgress -Circular -Color $common.Blue
                                 New-UDProgress -Circular -Color $common.Green
-                                New-UDProgress -Circular -Color $common.Pink
+                                New-UDProgress -Circular -Color $common.Cyan
                                 New-UDProgress -Circular -Color $common.Purple
                             } -Attributes @{
                                 style = @{
@@ -123,7 +123,7 @@ New-UDPage -Name Sample -Url / -Content {
                         Show-UDToast -BackgroundColor $common.BlueARGB95 -Message 'Hello!' -Duration 3000
                     }
                     New-UDButton -Variant 'contained' -Color 'secondary' -Text 'Secondary' -OnClick {
-                        Show-UDToast -BackgroundColor $common.PinkARGB95 -Message 'Hello!' -Duration 3000
+                        Show-UDToast -BackgroundColor $common.CyanARGB95 -Message 'Hello!' -Duration 3000
                     }
                     New-UDButton -Variant 'contained' -Color 'info' -Text 'Info' (New-UDIcon -Icon bolt) -OnClick {
                         Show-UDToast -BackgroundColor $common.PurpleARGB95 -Message 'Hello!' -Duration 3000
@@ -147,7 +147,7 @@ New-UDPage -Name Sample -Url / -Content {
                         Show-UDToast -BackgroundColor $common.BlueARGB95 -Message 'Hello!' -Duration 3000
                     }
                     New-UDButton -Variant 'outlined' -Color 'secondary' -Text 'Secondary' -OnClick {
-                        Show-UDToast -BackgroundColor $common.PinkARGB95 -Message 'Hello!' -Duration 3000
+                        Show-UDToast -BackgroundColor $common.CyanARGB95 -Message 'Hello!' -Duration 3000
                     }
                     New-UDButton -Variant 'outlined' -Color 'info' -Text 'Info' -OnClick {
                         Show-UDToast -BackgroundColor $common.PurpleARGB95 -Message 'Hello!' -Duration 3000
@@ -181,7 +181,7 @@ New-UDPage -Name Sample -Url / -Content {
                         $common.Red,
                         $common.RedHover,
                         $common.Yellow,
-                        $common.Pink
+                        $common.Cyan
                     ) -BorderColor @(
                         $common.Purple,
                         $common.PurpleHover,
@@ -192,7 +192,7 @@ New-UDPage -Name Sample -Url / -Content {
                         $common.Red,
                         $common.RedHover,
                         $common.Yellow,
-                        $common.Pink
+                        $common.Cyan
                     ) -HoverBackgroundColor @(
                         $common.PurpleHover,
                         $common.Purple,
@@ -203,7 +203,7 @@ New-UDPage -Name Sample -Url / -Content {
                         $common.RedHover,
                         $common.Red,
                         $common.YellowHover,
-                        $common.PinkHover
+                        $common.CyanHover
                     )
                 }
                 New-UDCard -Content {

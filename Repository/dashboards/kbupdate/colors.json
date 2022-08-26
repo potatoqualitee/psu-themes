@@ -31,11 +31,11 @@
     "PurpleARGB15": "#26F651FF",
     "PurpleARGB95": "#F2F651FF",
     "PurpleHover": "#CD45D8",
-    "Pink": "#FF55A5",
-    "PinkRGBA15": "#FF55A526",
-    "PinkARGB15": "#26FF55A5",
-    "PinkARGB95": "#F2FF55A5",
-    "PinkHover": "#D84A91"
+    "Cyan": "#FF55A5",
+    "CyanRGBA15": "#FF55A526",
+    "CyanARGB15": "#26FF55A5",
+    "CyanARGB95": "#F2FF55A5",
+    "CyanHover": "#D84A91"
   },
   {
     "Mode": "dim",

@@ -26,9 +26,9 @@ ForEach ($theme in $enabledthemes) {
                     contrastText = $common.Black
                 }
                 secondary  = @{
-                    main         = $common.Pink
-                    dark         = $theme.PinkRGBA15
-                    light        = $common.PinkRGBA15
+                    main         = $common.Cyan
+                    dark         = $theme.CyanRGBA15
+                    light        = $common.CyanRGBA15
                     contrastText = $common.Black
                 }
                 warning    = @{
@@ -307,7 +307,7 @@ ForEach ($theme in $enabledthemes) {
                     }
                     containedSecondary = @{
                         '&:hover' = @{
-                            backgroundColor = $common.PinkHover
+                            backgroundColor = $common.CyanHover
                         }
                     }
                     containedInfo      = @{
@@ -344,9 +344,9 @@ ForEach ($theme in $enabledthemes) {
                         }
                     }
                     outlinedSecondary  = @{
-                        borderColor = $common.Pink
+                        borderColor = $common.Cyan
                         '&:hover'   = @{
-                            backgroundColor = $common.Pink
+                            backgroundColor = $common.Cyan
                         }
                     }
                     outlinedInfo       = @{
