@@ -7,11 +7,17 @@ jobs:
   process-json:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Checkout tools repo
+      uses: actions/checkout@v3
+      with:
+        repository: primer/prism
+        path: prism
 
     - name: Prism
       run: |
-        git clone git@github.com:primer/prism.git
         cd prism
         yarn
         yarn start
