@@ -50,7 +50,8 @@ jobs:
         npm run dev --w api &
 
     - name: Sleep 20
-      run: Start-Sleep 20
+      shell: bash
+      run: sleep 20
         
     - name: Test prism
       run: (Invoke-WebRequest -Uri  http://localhost:3000).Content
