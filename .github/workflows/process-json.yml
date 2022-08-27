@@ -6,15 +6,32 @@ defaults:
 jobs:
   process-json:
     runs-on: ubuntu-latest
+    container: node:latest
+    services:
+      postgres:
+        image: postgres:latest
+        env:
+          POSTGRES_DB: postgres
+          POSTGRES_PASSWORD: postgres_password
+          POSTGRES_PORT: 5432
+          POSTGRES_USER: postgres
+        ports:
+          - 5432:5432
     steps:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Checkout tools repo
+    - name: Checkout prism repo
       uses: actions/checkout@v3
       with:
         repository: primer/prism
         path: prism
+
+    - name: Checkout prism api repo
+      uses: actions/checkout@v3
+      with:
+        repository: primer/api
+        path: api
 
     - name: Prism
       shell: bash
@@ -24,6 +41,15 @@ jobs:
         yarn start &
         sleep 20
 
+    - name: API
+      shell: bash
+      run: |
+        cd api
+        npm run setup
+        npm i --save-dev prisma@latest
+        npm i @prisma/client@latest
+        npm run dev &
+        
     - name: Test prism
       run: (Invoke-WebRequest -Uri  http://localhost:3000).Content
 
