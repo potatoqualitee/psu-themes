@@ -39,7 +39,6 @@ jobs:
         cd prism
         yarn
         yarn start &
-        sleep 20
 
     - name: API
       shell: bash
@@ -48,7 +47,9 @@ jobs:
         npm run setup
         npm i --save-dev prisma@latest
         npm i @prisma/client@latest
-        npm run dev &
+        npm run dev --w api &
+        "sleeping"
+        sleep 20
         
     - name: Test prism
       run: (Invoke-WebRequest -Uri  http://localhost:3000).Content
