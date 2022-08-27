@@ -48,8 +48,9 @@ jobs:
         npm i --save-dev prisma@latest
         npm i @prisma/client@latest
         npm run dev --w api &
-        "sleeping"
-        sleep 20
+
+    - name: Sleep 20
+      run: Start-Sleep 20
         
     - name: Test prism
       run: (Invoke-WebRequest -Uri  http://localhost:3000).Content
