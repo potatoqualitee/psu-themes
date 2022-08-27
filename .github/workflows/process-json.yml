@@ -4,7 +4,7 @@ env:
   POSTGRES_PASSWORD: postgres_password
   POSTGRES_PORT: 5432
   POSTGRES_USER: postgres
-
+  DATABASE_URL: postgres://postgres:postgres_password@localhost:5432/postgres
 jobs:
   process-json:
     runs-on: ubuntu-latest
@@ -39,7 +39,7 @@ jobs:
         npm run setup
         npm i --save-dev prisma@latest
         npm i @prisma/client@latest
-        npm run dev --w api &
+        npm run dev &
 
     - name: Sleep 20
       run: sleep 20
