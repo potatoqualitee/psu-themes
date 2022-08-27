@@ -25,6 +25,23 @@ function New-NavSwitch ($nav, $item, [switch]$disabled) {
 function Get-Colors {
     Get-Content -Path (Join-Path -Path $script:UDRoot -ChildPath colors.json) | ConvertFrom-Json
 }
+function Theme {
+    Get-Content -Path (Join-Path -Path $script:UDRoot -ChildPath themes.json) | ConvertFrom-Json
+}
+
+function Get-Theme {
+    $themes = Get-Content -Path (Join-Path -Path $script:UDRoot -ChildPath windows-terminal-themes.json) | ConvertFrom-Json
+    foreach ($theme in $themes) {
+        $isdark = Test-DarkColor $theme.background
+        $blah = [pscustomobject]@{
+            Name = $theme.Name
+            Theme = switch ($isdark) {
+                $false  { "Light" }
+                $true   { "Dark" }
+            }
+        }
+    }
+}
 
 function Test-DarkColor {
     <#

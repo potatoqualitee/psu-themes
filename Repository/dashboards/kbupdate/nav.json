@@ -57,6 +57,13 @@
   },
   {
     "Category": "Settings",
+    "Label": "Theme",
+    "Redirect": "/settings/theme",
+    "Icon": "air_freshener",
+    "Enabled": true
+  },
+  {
+    "Category": "Settings",
     "Label": "Supported Icons",
     "Redirect": "/icons",
     "Icon": "icons",
