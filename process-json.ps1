@@ -107,6 +107,16 @@ function Test-DarkColor {
     }
 }
 
+function Get-ColorApi {
+    [cmdletbinding()]
+    param(
+        $Color, 
+        $Count = 4
+    )
+    $Color = $Color -replace '#'
+    Invoke-RestMethod "https://www.thecolorapi.com/scheme?hex=$Color&mode=monochrome&count=$Count&format=json" -Verbose
+}
+
 $wintermthemes = Get-Content windows-terminal-themes.json | ConvertFrom-Json
 
 $allthemes = @()
@@ -134,7 +144,7 @@ foreach ($theme in $wintermthemes) {
     }
 }
 
-$themegroups = $allthemes | Group-Object -Property $name
+$themegroups = $allthemes | Group-Object -Property Name
 
 foreach ($themegroup in $themegroups) {
     $themename = $themegroup.Name
@@ -148,52 +158,69 @@ foreach ($themegroup in $themegroups) {
         }
         # if mode = light, hover = next darker
         # if mode = dark, hover = next lighter
+        $yellow     = Get-ColorApi -Color $theme.yellow
+        $red        = Get-ColorApi -Color $theme.red
+        $green      = Get-ColorApi -Color $theme.green
+        $blue       = Get-ColorApi -Color $theme.blue
+        $purple     = Get-ColorApi -Color $theme.purple
+        $cyan       = Get-ColorApi -Color $theme.cyan
+        $background = Get-ColorApi -Color $theme.background
+        $foreground = Get-ColorApi -Color $theme.foreground
+
         $themearray += [pscustomobject]@{
             "Mode"              = $themeroot.Mode
-            "Enabled"           = "false"
             "BorderRadius"      = "0.475rem"
             "FontFamily"        = "'Inter' sans-serif"
             "Black"             = $theme.black
             "White"             = $theme.white
             "Yellow"            = $theme.yellow
-            "YellowRGBA15"      = "26" + $theme.yellow
+            "YellowRGBA15"      = "#26" + ($theme.yellow -replace '#')
             "YellowARGB15"      = $theme.yellow + "26"
             "YellowARGB95"      = $theme.yellow + "F2"
-            "YellowHover"       = "#D69E00"
+            "YellowHover"       = "#" + ($yellow.colors | Select-Object -Last 1).hex.clean
             "Red"               =  $theme.red
-            "RedRGBA15"         = "26" + $theme.red
+            "RedRGBA15"         = "#26" + ($theme.red -replace '#')
             "RedARGB15"         = $theme.red + "26"
             "RedARGB95"         = $theme.red + "F2"
-            "RedHover"          = "#D85252"
+            "RedHover"          = "#" + ($red.colors | Select-Object -Last 1).hex.clean
             "Green"             = $theme.green
-            "GreenRGBA15"       = "26" + $theme.green
+            "GreenRGBA15"       = "#26" + ($theme.green -replace '#')
             "GreenARGB15"       = $theme.green + "26"
             "GreenARGB95"       = $theme.green + "F2"
-            "GreenHover"        = "#41A369"
+            "GreenHover"        = "#" + ($green.colors | Select-Object -Last 1).hex.clean
             "Blue"              = $theme.blue
-            "BlueRGBA15"        = "26" + $theme.blue
+            "BlueRGBA15"        = "#26" + ($theme.blue -replace '#')
             "BlueARGB15"        = $theme.blue + "26"
             "BlueARGB95"        = $theme.blue + "F2"
-            "BlueHover"         = "#1C90AF"
+            "BlueHover"         = "#" + ($blue.colors | Select-Object -Last 1).hex.clean
             "Purple"            = $theme.purple
-            "PurpleRGBA15"      = "26" + $theme.purple
+            "PurpleRGBA15"      = "#26" + ($theme.purple -replace '#')
             "PurpleARGB15"      = $theme.purple + "26"
             "PurpleARGB95"      = $theme.purple + "F2"
-            "PurpleHover"       = "#CD45D8"
+            "PurpleHover"       = "#" + ($purple.colors | Select-Object -Last 1).hex.clean
             "Cyan"              = $theme.cyan
-            "CyanRGBA15"        = "26" + $theme.cyan
+            "CyanRGBA15"        = "#26" + ($theme.cyan -replace '#')
             "CyanARGB15"        = $theme.cyan + "26"
             "CyanARGB95"        = $theme.cyan + "F2"
-            "CyanHover"         = "#D84A91"
+            "CyanHover"         = "#" + ($cyan.colors | Select-Object -Last 1).hex.clean
             "Main"              = $theme.background
             "MainSecondary"     = $theme.foreground
-            "MainGamma"         = "#30363d"
-            "MainDelta"         = "#464f5a"
-            "Opposite"          = "#c9d1d9"
-            "OppositeSecondary" = "#8b949e"
-            "HighContrast"      = "#ffffff"
+            "MainGamma"         = "#" + ($foreground.colors | Select-Object -First 1 -Skip 1).hex.clean
+            "MainDelta"         = "#" + ($background.colors | Select-Object -First 1).hex.clean
+            "OppositeSecondary" = "#" + ($background.colors | Select-Object -First 1 -Skip 1).hex.clean
+            "Opposite"          = "#" + ($background.colors | Select-Object -First 1 -Skip 2).hex.clean
+            "HighContrast"      = "#" + ($background.colors | Select-Object -Last 1).hex.clean
         }
-        <#
+        # if light theme, gamma is one darker then it gets lighter
+        # main and high contract and opposite are closest
+        # if dark theme, gamma is one lighter then it gets darker
+    }
+    $themearray | ConvertTo-Json | Out-File -FilePath $filename
+}
+
+
+
+<#
         
             cursorColor         : #353535
             selectionBackground : #d7d7d7
@@ -222,7 +249,3 @@ foreach ($themegroup in $themegroups) {
             * MainGamma - A shade darker than “Main”
             * MainDelta - A shade darker than “MainGamma”
         #>
-    }
-    #$themearray | ConvertTo-Json | Out-File -FilePath $filename
-}
-
