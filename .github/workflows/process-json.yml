@@ -9,9 +9,15 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: Prism
+      run: |
+        git clone git@github.com:primer/prism.git
+        cd prism
+        yarn
+        yarn start
+
     - name: Execute json downloader
       run: Invoke-WebRequest -Uri  https://www.atomcorp.dev/api/v1/themes -OutFile windows-terminal-themes.json
 
     - name: Parse and write
-      shell: pwsh
       run: ./process-json.ps1

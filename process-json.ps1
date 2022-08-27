@@ -90,7 +90,7 @@ function Test-DarkColor {
     }
     
     $r, $g, $b | Write-Verbose
-    # HSP (Highly Sensitive Ppl) equation from http:#alienryderflex.com/hsp.html
+    # HSP equation from http://alienryderflex.com/hsp.html
     $hsp = [math]::Sqrt(
         0.299 * ($r * $r) +
         0.587 * ($g * $g) +
