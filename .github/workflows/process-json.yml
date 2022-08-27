@@ -17,11 +17,12 @@ jobs:
         path: prism
 
     - name: Prism
+      shell: bash
       run: |
         cd prism
         yarn
         & yarn start
-        Start-Sleep 20
+        sleep 20
 
     - name: Execute json downloader
       run: Invoke-WebRequest -Uri  https://www.atomcorp.dev/api/v1/themes -OutFile windows-terminal-themes.json
