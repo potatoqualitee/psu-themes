@@ -1,18 +1,13 @@
 on: push
+env:
+  POSTGRES_DB: postgres
+  POSTGRES_PASSWORD: postgres_password
+  POSTGRES_PORT: 5432
+  POSTGRES_USER: postgres
+
 jobs:
   process-json:
     runs-on: ubuntu-latest
-    container: node:latest
-    services:
-      postgres:
-        image: postgres:latest
-        env:
-          POSTGRES_DB: postgres
-          POSTGRES_PASSWORD: postgres_password
-          POSTGRES_PORT: 5432
-          POSTGRES_USER: postgres
-        ports:
-          - 5432:5432
     steps:
     - name: Checkout
       uses: actions/checkout@v3
@@ -28,6 +23,9 @@ jobs:
       with:
         repository: primer/api
         path: api
+
+    - name: Docker
+      run: docker run -d postgres
 
     - name: Prism
       run: |
