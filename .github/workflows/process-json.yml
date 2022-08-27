@@ -25,10 +25,10 @@ jobs:
         sleep 20
 
     - name: Test prism
-      run: (Invoke-WebRequest -Uri  https://localhost:3000).Content
+      run: (Invoke-WebRequest -Uri  http://localhost:3000).Content
 
     - name: Test API
-      run: (Invoke-WebRequest -Uri  https://localhost:4000).Content
+      run: (Invoke-WebRequest -Uri  http://localhost:4000).Content
 
 
     - name: Execute json downloader
