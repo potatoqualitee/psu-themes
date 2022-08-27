@@ -21,7 +21,7 @@ jobs:
       run: |
         cd prism
         yarn
-        & yarn start
+        yarn start &
         sleep 20
 
     - name: Execute json downloader
