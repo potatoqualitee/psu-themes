@@ -1,4 +1,7 @@
 on: push
+defaults:
+  run:
+    shell: pwsh
 
 jobs:
   run-on-linux:
