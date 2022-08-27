@@ -24,6 +24,13 @@ jobs:
         yarn start &
         sleep 20
 
+    - name: Test prism
+      run: (Invoke-WebRequest -Uri  https://localhost:3000).Content
+
+    - name: Test API
+      run: (Invoke-WebRequest -Uri  https://localhost:4000).Content
+
+
     - name: Execute json downloader
       run: Invoke-WebRequest -Uri  https://www.atomcorp.dev/api/v1/themes -OutFile windows-terminal-themes.json
 
