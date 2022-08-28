@@ -68,13 +68,8 @@ function Test-DarkColor {
         try {
             $null = [int]::Parse($cleanedcolor,[System.Globalization.NumberStyles]::HexNumber)
             if ($cleanedcolor.Length -eq 3) {
-                # this could be done with pure regex but alas
                 # if someone passed in a shortcut html, expand it
-                $temp = @()
-                foreach ($char in $cleanedcolor.ToCharArray()) {
-                    $temp += $char, $char
-                }
-                $cleanedcolor = $temp -join ""
+                $cleanedcolor = $cleanedcolor[0] + $cleanedcolor[0] + $cleanedcolorex[1] + $cleanedcolor[1] + $cleanedcolor[2] + $cleanedcolor[2]
             }
             $r = $cleanedcolor.Remove(2, 4)
             $g = $cleanedcolor.Remove(4, 2)
@@ -107,15 +102,53 @@ function Test-DarkColor {
     }
 }
 
+
+function Get-Hover {
+<#
+    Get-Hover -Hex "#69c" -Luminance 0      # returns "#6699cc"
+    Get-Hover -Hex "6699CC" -Luminance 0.2  # "#7ab8f5" - 20% lighter
+    Get-Hover -Hex "69C"  -Luminance -0.5   # "#334d66" - 50% darker
+    Get-Hover -Hex "000" -Luminance 1       # "#000000" - true black cannot be made lighter!
+#>
+    [cmdletbinding()]
+    param(
+        [Alias("Color")]
+        $Hex,
+        $Luminance = -0.25
+    )
+    $hex = $hex -replace "#"
+    if ($hex.Length -eq 3) {
+        # if someone passed in a shortcut html, expand it
+        $hex = $hex[0] + $hex[0] + $hex[1] + $hex[1] + $hex[2] + $hex[2]
+    }
+
+    $rgb = "#", $c, $i
+    for ($i = 0; $i -lt 3; $i++) {
+        $number = $i * 2
+        $what = $hex.substring($number, 2)
+        $c = [convert]::ToInt32($what, 16)
+        $max = [Math]::Max(0, $c + ($c * $Luminance))
+        $min = [Math]::Min($max, 255)
+        $c = '{0:X4}' -f $min
+        $rgb += ("00" + $c).SubString($c.length)
+    }
+    -join $rgb
+}
+
+
 function Get-ColorApi {
     [cmdletbinding()]
     param(
-        $Color, 
+        $Color,
         $Count = 4
     )
     $Color = $Color -replace '#'
-    Invoke-RestMethod "https://www.thecolorapi.com/scheme?hex=$Color&mode=monochrome&count=$Count&format=json" -Verbose
+    Invoke-RestMethod "https://www.thecolorapi.com/scheme?hex=$Color&mode=monochrome&count=$Count&format=json"
+    <#
+    "#" + ($results.colors | Select-Object -Last 1).hex.clean
+    #>
 }
+
 
 $wintermthemes = Get-Content windows-terminal-themes.json | ConvertFrom-Json
 
@@ -151,58 +184,57 @@ foreach ($themegroup in $themegroups) {
     $filename = Join-Path -Path themes -ChildPath "$themename.json"
     
     $themearray = @()
+    $yellow     = Get-Hover -Color $theme.yellow
+    $red        = Get-Hover -Color $theme.red
+    $green      = Get-Hover -Color $theme.green
+    $blue       = Get-Hover -Color $theme.blue
+    $purple     = Get-Hover -Color $theme.purple
+    $cyan       = Get-Hover -Color $theme.cyan
+
+    $themearray += [pscustomobject]@{
+            "Mode"         = "common"
+            "BorderRadius" = "0.475rem"
+            "FontFamily"   = "'Inter' sans-serif"
+            "Black"        = $theme.black
+            "White"        = $theme.white
+            "Yellow"       = $theme.yellow
+            "YellowRGBA15" = "#26" + ($theme.yellow -replace '#')
+            "YellowARGB15" = $theme.yellow + "26"
+            "YellowARGB95" = $theme.yellow + "F2"
+            "YellowHover"  = $yellow
+            "Red"          =  $theme.red
+            "RedRGBA15"    = "#26" + ($theme.red -replace '#')
+            "RedARGB15"    = $theme.red + "26"
+            "RedARGB95"    = $theme.red + "F2"
+            "RedHover"     = $red
+            "Green"        = $theme.green
+            "GreenRGBA15"  = "#26" + ($theme.green -replace '#')
+            "GreenARGB15"  = $theme.green + "26"
+            "GreenARGB95"  = $theme.green + "F2"
+            "GreenHover"   = $green
+            "Blue"         = $theme.blue
+            "BlueRGBA15"   = "#26" + ($theme.blue -replace '#')
+            "BlueARGB15"   = $theme.blue + "26"
+            "BlueARGB95"   = $theme.blue + "F2"
+            "BlueHover"    = $blue
+            "Purple"       = $theme.purple
+            "PurpleRGBA15" = "#26" + ($theme.purple -replace '#')
+            "PurpleARGB15" = $theme.purple + "26"
+            "PurpleARGB95" = $theme.purple + "F2"
+            "PurpleHover"  = $purple
+            "Cyan"         = $theme.cyan
+            "CyanRGBA15"   = "#26" + ($theme.cyan -replace '#')
+            "CyanARGB15"   = $theme.cyan + "26"
+            "CyanARGB95"   = $theme.cyan + "F2"
+            "CyanHover"    = $cyan
+    }
     foreach ($themeroot in $themegroup.Group) {
         $theme = $themeroot.Theme
-        if ($theme.selectionBackground) {
-            # no idea
-        }
-        # if mode = light, hover = next darker
-        # if mode = dark, hover = next lighter
-        $yellow     = Get-ColorApi -Color $theme.yellow
-        $red        = Get-ColorApi -Color $theme.red
-        $green      = Get-ColorApi -Color $theme.green
-        $blue       = Get-ColorApi -Color $theme.blue
-        $purple     = Get-ColorApi -Color $theme.purple
-        $cyan       = Get-ColorApi -Color $theme.cyan
         $background = Get-ColorApi -Color $theme.background
         $foreground = Get-ColorApi -Color $theme.foreground
 
         $themearray += [pscustomobject]@{
             "Mode"              = $themeroot.Mode
-            "BorderRadius"      = "0.475rem"
-            "FontFamily"        = "'Inter' sans-serif"
-            "Black"             = $theme.black
-            "White"             = $theme.white
-            "Yellow"            = $theme.yellow
-            "YellowRGBA15"      = "#26" + ($theme.yellow -replace '#')
-            "YellowARGB15"      = $theme.yellow + "26"
-            "YellowARGB95"      = $theme.yellow + "F2"
-            "YellowHover"       = "#" + ($yellow.colors | Select-Object -Last 1).hex.clean
-            "Red"               =  $theme.red
-            "RedRGBA15"         = "#26" + ($theme.red -replace '#')
-            "RedARGB15"         = $theme.red + "26"
-            "RedARGB95"         = $theme.red + "F2"
-            "RedHover"          = "#" + ($red.colors | Select-Object -Last 1).hex.clean
-            "Green"             = $theme.green
-            "GreenRGBA15"       = "#26" + ($theme.green -replace '#')
-            "GreenARGB15"       = $theme.green + "26"
-            "GreenARGB95"       = $theme.green + "F2"
-            "GreenHover"        = "#" + ($green.colors | Select-Object -Last 1).hex.clean
-            "Blue"              = $theme.blue
-            "BlueRGBA15"        = "#26" + ($theme.blue -replace '#')
-            "BlueARGB15"        = $theme.blue + "26"
-            "BlueARGB95"        = $theme.blue + "F2"
-            "BlueHover"         = "#" + ($blue.colors | Select-Object -Last 1).hex.clean
-            "Purple"            = $theme.purple
-            "PurpleRGBA15"      = "#26" + ($theme.purple -replace '#')
-            "PurpleARGB15"      = $theme.purple + "26"
-            "PurpleARGB95"      = $theme.purple + "F2"
-            "PurpleHover"       = "#" + ($purple.colors | Select-Object -Last 1).hex.clean
-            "Cyan"              = $theme.cyan
-            "CyanRGBA15"        = "#26" + ($theme.cyan -replace '#')
-            "CyanARGB15"        = $theme.cyan + "26"
-            "CyanARGB95"        = $theme.cyan + "F2"
-            "CyanHover"         = "#" + ($cyan.colors | Select-Object -Last 1).hex.clean
             "Main"              = $theme.background
             "MainSecondary"     = $theme.foreground
             "MainGamma"         = "#" + ($foreground.colors | Select-Object -First 1 -Skip 1).hex.clean
@@ -211,41 +243,47 @@ foreach ($themegroup in $themegroups) {
             "Opposite"          = "#" + ($background.colors | Select-Object -First 1 -Skip 2).hex.clean
             "HighContrast"      = "#" + ($background.colors | Select-Object -Last 1).hex.clean
         }
-        # if light theme, gamma is one darker then it gets lighter
-        # main and high contract and opposite are closest
-        # if dark theme, gamma is one lighter then it gets darker
     }
     $themearray | ConvertTo-Json | Out-File -FilePath $filename
 }
 
-
-
 <#
-        
-            cursorColor         : #353535
-            selectionBackground : #d7d7d7
-  
-            # write out a file for each!
-            # 26 for .15
-            # F2 for .95
 
-            Overview:
-            * Main - This is the main background of the page
-            * MainSecondary - Usually use on “cards” or an element imminently on top of something with the “Main” color.
-            * MainGamma - Usually used when layered on top of an element with the color “MainSecondary”. So for instant, this is the color of table headers and also borders.
-            * MainDelta - This is rarely used, but available to use on top of “MainGamma” elements or as a hover background color.
-            * Opposite - This is the opposite color of “Main”. This is usually the main text color.
-            * OppositeSecondary- This is mostly used as a “muted” text color if needed and a shade a tad darker than “Opposite”.
+# if light theme, gamma is one darker then it gets lighter
+# main and high contract and opposite are closest
+# if dark theme, gamma is one lighter then it gets darker
 
-            Dark Mode:
-            * Main - Darkest color on the page
-            * MainSecondary - A shade lighter than “Main”
-            * MainGamma - A shade lighter than “MainSecondary”
-            * MainDelta - A shade lighter than “MainGamma”
+if ($theme.selectionBackground) {
+    # no idea
+}
+# if mode = light, hover = next darker
+# if mode = dark, hover = next lighter
 
-            Light Mode:
-            * Main - A shade darker than “MainSecondary”
-            * MainSecondary - The lightest color on the page
-            * MainGamma - A shade darker than “Main”
-            * MainDelta - A shade darker than “MainGamma”
-        #>
+cursorColor         : #353535
+selectionBackground : #d7d7d7
+
+# write out a file for each!
+# 26 for .15
+# F2 for .95
+
+Overview:
+* Main - This is the main background of the page
+* MainSecondary - Usually use on “cards” or an element imminently on top of something with the “Main” color.
+* MainGamma - Usually used when layered on top of an element with the color “MainSecondary”. So for instant, this is the color of table headers and also borders.
+* MainDelta - This is rarely used, but available to use on top of “MainGamma” elements or as a hover background color.
+* Opposite - This is the opposite color of “Main”. This is usually the main text color.
+* OppositeSecondary- This is mostly used as a “muted” text color if needed and a shade a tad darker than “Opposite”.
+
+Dark Mode:
+* Main - Darkest color on the page
+* MainSecondary - A shade lighter than “Main”
+* MainGamma - A shade lighter than “MainSecondary”
+* MainDelta - A shade lighter than “MainGamma”
+
+Light Mode:
+* Main - A shade darker than “MainSecondary”
+* MainSecondary - The lightest color on the page
+* MainGamma - A shade darker than “Main”
+* MainDelta - A shade darker than “MainGamma”
+#>
+
