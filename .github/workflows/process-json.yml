@@ -13,4 +13,5 @@ jobs:
       run: Invoke-WebRequest -Uri  https://www.atomcorp.dev/api/v1/themes -OutFile windows-terminal-themes.json
 
     - name: Test
-      run: sudo snap install pastel #./process-json.ps1
+      run: |
+        sudo snap install pastel #./process-json.ps1
