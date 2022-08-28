@@ -102,6 +102,30 @@ function Test-DarkColor {
     }
 }
 
+function Get-InvertedColor {
+    [cmdletbinding()]
+    param(
+        [Alias("Color")]
+        $Hex
+    )
+    
+    $hex = $hex -replace "#"
+    if ($hex.Length -eq 3) {
+        # if someone passed in a shortcut html, expand it
+        $hex = $hex[0] + $hex[0] + $hex[1] + $hex[1] + $hex[2] + $hex[2]
+    }
+
+    $rgb = "#"
+    for ($i = 0; $i -lt 3; $i++) {
+        $number = $i * 2
+        $what = $hex.substring($number, 2)
+        $c = [convert]::ToInt32($what, 16)
+        $opposite = (255 - $c)
+        $c = '{0:X4}' -f $opposite
+        $rgb += ("00" + $c).SubString($c.length)
+    }
+    -join $rgb
+}
 
 function Get-Hover {
 <#
@@ -147,7 +171,8 @@ function Get-ColorApi {
 }
 
 
-$wintermthemes = Get-Content windows-terminal-themes.json | ConvertFrom-Json
+$wintermthemes = Get-Content (Get-ChildItem -Recurse C:\github\psu-themes\*windows-terminal-themes.json) | ConvertFrom-Json
+$wintermthemes = $wintermthemes | Where-Object name -eq retrowave
 
 $allthemes = @()
 foreach ($theme in $wintermthemes) {
@@ -179,7 +204,7 @@ $themegroups = $allthemes | Group-Object -Property Name
 foreach ($themegroup in $themegroups) {
     $themename = $themegroup.Name
     $filename = Join-Path -Path themes -ChildPath "$themename.json"
-    
+    $theme = $themegroup.Group[0].Theme
     $themearray = @()
     $yellow     = Get-Hover -Color $theme.yellow
     $red        = Get-Hover -Color $theme.red
@@ -235,14 +260,68 @@ foreach ($themegroup in $themegroups) {
             "Mode"              = $themeroot.Mode
             "Enabled"           = "false"
             "Main"              = $theme.background
-            "MainSecondary"     = $theme.foreground
-            "MainGamma"         = "#" + ($foreground.colors | Select-Object -First 1 -Skip 1).hex.clean
+            "MainSecondary"     = "#" + ($background.colors | Select-Object -First 1 -Skip 1).hex.clean
+            "MainGamma"         = "#" + ($background.colors | Select-Object -First 1 -Skip 1).hex.clean
             "MainDelta"         = "#" + ($background.colors | Select-Object -First 1).hex.clean
             "OppositeSecondary" = "#" + ($background.colors | Select-Object -First 1 -Skip 1).hex.clean
             "Opposite"          = "#" + ($background.colors | Select-Object -First 1 -Skip 2).hex.clean
-            "HighContrast"      = "#" + ($background.colors | Select-Object -Last 1).hex.clean
+            "HighContrast"      = Get-InvertedColor $theme.background
         }
     }
     $themearray | ConvertTo-Json | Out-File -FilePath $filename
 }
+<#
+{
+  "name": "Retrowave",
+  "black": "#181A1F",
+  "red": "#FF16B0",
+  "green": "#929292",
+  "yellow": "#fcee54",
+  "blue": "#46BDFF",
+  "purple": "#FF92DF",
+  "cyan": "#df81fc",
+  "white": "#FFFFFF",
+  "brightBlack": "#FF16B0",
+  "brightRed": "#f85353",
+  "brightGreen": "#fcee54",
+  "brightYellow": "#ffffff",
+  "brightBlue": "#46BDFF",
+  "brightPurple": "#FF92DF",
+  "brightCyan": "#ff901f",
+  "brightWhite": "#ffffff",
+  "background": "#070825",
+  "foreground": "#46BDFF"
+}
 
+# KBUPATE
+    "Mode": "dark",
+    "Enabled": true,
+    "Main": "#0D0F31",
+    "MainSecondary": "#070825",
+    "MainGamma": "#454761",
+    "MainDelta": "#A2A2AA",
+    "Opposite": "#c9d1d9",
+    "OppositeSecondary": "#8b949e",
+    "HighContrast": "#ffffff"
+#>
+<#
+Overview:
+* Main - This is the main background of the page
+* MainSecondary - Usually use on “cards” or an element imminently on top of something with the “Main” color.
+* MainGamma - Usually used when layered on top of an element with the color “MainSecondary”. So for instant, this is the color of table headers and also borders.
+* MainDelta - This is rarely used, but available to use on top of “MainGamma” elements or as a hover background color.
+* Opposite - This is the opposite color of “Main”. This is usually the main text color.
+* OppositeSecondary- This is mostly used as a “muted” text color if needed and a shade a tad darker than “Opposite”.
+
+Dark Mode:
+* Main - Darkest color on the page
+* MainSecondary - A shade lighter than “Main”
+* MainGamma - A shade lighter than “MainSecondary”
+* MainDelta - A shade lighter than “MainGamma”
+
+Light Mode:
+* Main - A shade darker than “MainSecondary”
+* MainSecondary - The lightest color on the page
+* MainGamma - A shade darker than “Main”
+* MainDelta - A shade darker than “MainGamma”
+#>
