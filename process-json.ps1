@@ -190,8 +190,9 @@ foreach ($themegroup in $themegroups) {
 
     $themearray += [pscustomobject]@{
             "Mode"         = "common"
+            "Enabled"      = "false"
             "BorderRadius" = "0.475rem"
-            "FontFamily"   = "'Inter' sans-serif"
+            "FontFamily"   = "'Inter', sans-serif"
             "Black"        = $theme.black
             "White"        = $theme.white
             "Yellow"       = $theme.yellow
@@ -232,6 +233,7 @@ foreach ($themegroup in $themegroups) {
 
         $themearray += [pscustomobject]@{
             "Mode"              = $themeroot.Mode
+            "Enabled"           = "false"
             "Main"              = $theme.background
             "MainSecondary"     = $theme.foreground
             "MainGamma"         = "#" + ($foreground.colors | Select-Object -First 1 -Skip 1).hex.clean
@@ -243,3 +245,4 @@ foreach ($themegroup in $themegroups) {
     }
     $themearray | ConvertTo-Json | Out-File -FilePath $filename
 }
+
