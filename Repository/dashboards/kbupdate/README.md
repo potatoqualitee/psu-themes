@@ -88,6 +88,13 @@ Light Mode:
 * MainGamma - A shade darker than “Main”
 * MainDelta - A shade darker than “MainGamma”
 
+Sample Nav:
+* MainGamma - Grocery background
+* Opposite - Grocery text
+* OppositeSecondary - Checkbox border
+
+Do while HSP less than something (do contrast)
+
 > Based on this, I would say:
 > Main == background
 > MainSecondary == foreground

@@ -148,7 +148,7 @@ function Get-Shade {
     }
     if ([double]$Luminance -lt 0) {
         write-warning darken
-        pastel color $Hex | pastel mix white | pastel darken $Luminance.Replace("-","") | pastel format hex
+        pastel color $Hex | pastel darken $Luminance.Replace("-","") | pastel format hex
         # pastel random | pastel mix red | pastel lighten 0.2 | pastel format hex
     } else {
         write-warning lighten
@@ -254,12 +254,12 @@ foreach ($themegroup in $themegroups) {
             $themearray += [pscustomobject]@{
                 "Mode"              = $themeroot.Mode
                 "Enabled"           = "true"
-                "Main"              = Get-Shade -Hex $theme.background -Luminance 0.1
+                "Main"              = Get-Shade -Hex $theme.background -Luminance -0.03
                 "MainSecondary"     = $theme.background
                 "MainGamma"         = Get-Shade -Hex $theme.background -Luminance 0.05
                 "MainDelta"         = Get-Shade -Hex $theme.background -Luminance 0.3
                 "OppositeSecondary" = Get-Shade -Hex (Get-InvertedColor $theme.background) -Luminance -0.08
-                "Opposite"          = Get-InvertedColor $theme.background
+                "Opposite"          = Get-Shade -Hex (Get-InvertedColor $theme.background) -Luminance -0.1
                 "HighContrast"      = Get-InvertedColor $theme.background
             }
         } else {
