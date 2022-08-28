@@ -127,12 +127,12 @@ function Get-InvertedColor {
     -join $rgb
 }
 
-function Get-Hover {
+function Get-Shade {
 <#
-    Get-Hover -Hex "#69c" -Luminance 0      # returns "#6699cc"
-    Get-Hover -Hex "6699CC" -Luminance 0.2  # "#7ab8f5" - 20% lighter
-    Get-Hover -Hex "69C"  -Luminance -0.5   # "#334d66" - 50% darker
-    Get-Hover -Hex "000" -Luminance 1       # "#000000" - true black cannot be made lighter!
+    Get-Shade -Hex "#69c" -Luminance 0      # returns "#6699cc"
+    Get-Shade -Hex "6699CC" -Luminance 0.2  # "#7ab8f5" - 20% lighter
+    Get-Shade -Hex "69C"  -Luminance -0.5   # "#334d66" - 50% darker
+    Get-Shade -Hex "000" -Luminance 1       # "#000000" - true black cannot be made lighter!
 #>
     [cmdletbinding()]
     param(
@@ -158,7 +158,6 @@ function Get-Hover {
     }
     -join $rgb
 }
-
 
 function Get-ColorApi {
     [cmdletbinding()]
@@ -206,12 +205,12 @@ foreach ($themegroup in $themegroups) {
     $filename = Join-Path -Path themes -ChildPath "$themename.json"
     $theme = $themegroup.Group[0].Theme
     $themearray = @()
-    $yellow     = Get-Hover -Color $theme.yellow
-    $red        = Get-Hover -Color $theme.red
-    $green      = Get-Hover -Color $theme.green
-    $blue       = Get-Hover -Color $theme.blue
-    $purple     = Get-Hover -Color $theme.purple
-    $cyan       = Get-Hover -Color $theme.cyan
+    $yellow     = Get-Shade -Color $theme.yellow
+    $red        = Get-Shade -Color $theme.red
+    $green      = Get-Shade -Color $theme.green
+    $blue       = Get-Shade -Color $theme.blue
+    $purple     = Get-Shade -Color $theme.purple
+    $cyan       = Get-Shade -Color $theme.cyan
 
     $themearray += [pscustomobject]@{
             "Mode"         = "common"
@@ -303,6 +302,13 @@ foreach ($themegroup in $themegroups) {
     "Opposite": "#c9d1d9",
     "OppositeSecondary": "#8b949e",
     "HighContrast": "#ffffff"
+#>
+
+<#
+    Get-Shade -Hex "#69c" -Luminance 0      # returns "#6699cc"
+    Get-Shade -Hex "6699CC" -Luminance 0.2  # "#7ab8f5" - 20% lighter
+    Get-Shade -Hex "69C"  -Luminance -0.5   # "#334d66" - 50% darker
+    Get-Shade -Hex "000" -Luminance 1       # "#000000" - true black cannot be made lighter!
 #>
 <#
 Overview:
