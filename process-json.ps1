@@ -144,9 +144,6 @@ function Get-ColorApi {
     )
     $Color = $Color -replace '#'
     Invoke-RestMethod "https://www.thecolorapi.com/scheme?hex=$Color&mode=monochrome&count=$Count&format=json"
-    <#
-    "#" + ($results.colors | Select-Object -Last 1).hex.clean
-    #>
 }
 
 
@@ -246,44 +243,3 @@ foreach ($themegroup in $themegroups) {
     }
     $themearray | ConvertTo-Json | Out-File -FilePath $filename
 }
-
-<#
-
-# if light theme, gamma is one darker then it gets lighter
-# main and high contract and opposite are closest
-# if dark theme, gamma is one lighter then it gets darker
-
-if ($theme.selectionBackground) {
-    # no idea
-}
-# if mode = light, hover = next darker
-# if mode = dark, hover = next lighter
-
-cursorColor         : #353535
-selectionBackground : #d7d7d7
-
-# write out a file for each!
-# 26 for .15
-# F2 for .95
-
-Overview:
-* Main - This is the main background of the page
-* MainSecondary - Usually use on “cards” or an element imminently on top of something with the “Main” color.
-* MainGamma - Usually used when layered on top of an element with the color “MainSecondary”. So for instant, this is the color of table headers and also borders.
-* MainDelta - This is rarely used, but available to use on top of “MainGamma” elements or as a hover background color.
-* Opposite - This is the opposite color of “Main”. This is usually the main text color.
-* OppositeSecondary- This is mostly used as a “muted” text color if needed and a shade a tad darker than “Opposite”.
-
-Dark Mode:
-* Main - Darkest color on the page
-* MainSecondary - A shade lighter than “Main”
-* MainGamma - A shade lighter than “MainSecondary”
-* MainDelta - A shade lighter than “MainGamma”
-
-Light Mode:
-* Main - A shade darker than “MainSecondary”
-* MainSecondary - The lightest color on the page
-* MainGamma - A shade darker than “Main”
-* MainDelta - A shade darker than “MainGamma”
-#>
-

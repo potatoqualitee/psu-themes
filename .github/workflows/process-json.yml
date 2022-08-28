@@ -13,4 +13,4 @@ jobs:
       run: Invoke-WebRequest -Uri  https://www.atomcorp.dev/api/v1/themes -OutFile windows-terminal-themes.json
 
     - name: Parse and write
-      run: ./process-json.ps1 # Invoke-RestMethod 'https://www.thecolorapi.com/scheme?hex=4C1AF3&mode=monochrome&count=5&format=json'
+      run: "hello" #./process-json.ps1
