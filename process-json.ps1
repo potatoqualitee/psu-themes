@@ -147,9 +147,12 @@ function Get-Shade {
         $hex = $hex[0] + $hex[0] + $hex[1] + $hex[1] + $hex[2] + $hex[2]
     }
     if ([double]$Luminance -lt 0) {
-        pastel darken $Luminance.Replace("-","") $Hex | pastel format hex
+        write-warning darken
+        pastel color $Hex | pastel mix white | pastel darken $Luminance.Replace("-","") | pastel format hex
+        # pastel random | pastel mix red | pastel lighten 0.2 | pastel format hex
     } else {
-        pastel lighten $Luminance $Hex | pastel format hex
+        write-warning lighten
+        pastel color $Hex | pastel mix white | pastel lighten $Luminance | pastel format hex
     }
 }
 
@@ -164,7 +167,7 @@ function Get-ColorApi {
 }
 
 $wintermthemes = Get-Content (Get-ChildItem -Recurse C:\github\psu-themes\*windows-terminal-themes.json) | ConvertFrom-Json
-
+#$wintermthemes = $wintermthemes | where-object name -eq "retrowave"
 
 $allthemes = @()
 foreach ($theme in $wintermthemes) {
@@ -198,6 +201,7 @@ foreach ($themegroup in $themegroups) {
     $filename = Join-Path -Path themes -ChildPath "$themename.json"
     $theme = $themegroup.Group[0].Theme
     $themearray = @()
+    write-warning TOPS
     $yellow     = Get-Shade -Color $theme.yellow
     $red        = Get-Shade -Color $theme.red
     $green      = Get-Shade -Color $theme.green
@@ -245,18 +249,34 @@ foreach ($themegroup in $themegroups) {
     }
     foreach ($themeroot in $themegroup.Group) {
         $theme = $themeroot.Theme
-        $themearray += [pscustomobject]@{
-            "Mode"              = $themeroot.Mode
-            "Enabled"           = "false"
-            "Main"              = $theme.background
-            "MainSecondary"     = Get-Shade -Hex $theme.background -Luminance -0.1
-            "MainGamma"         = Get-Shade -Hex $theme.background -Luminance 0.2
-            "MainDelta"         = Get-Shade -Hex $theme.background -Luminance 0.4
-            "OppositeSecondary" = Get-Shade -Hex $theme.background -Luminance 0.8
-            "Opposite"          = Get-Shade -Hex $theme.background -Luminance 0.9
-            "HighContrast"      = Get-InvertedColor $theme.background
+        if ((Test-DarkColor $theme.background)) {
+            write-warning "$($theme.background) is dark"
+            $themearray += [pscustomobject]@{
+                "Mode"              = $themeroot.Mode
+                "Enabled"           = "true"
+                "Main"              = Get-Shade -Hex $theme.background -Luminance 0.1
+                "MainSecondary"     = $theme.background
+                "MainGamma"         = Get-Shade -Hex $theme.background -Luminance 0.05
+                "MainDelta"         = Get-Shade -Hex $theme.background -Luminance 0.3
+                "OppositeSecondary" = Get-Shade -Hex (Get-InvertedColor $theme.background) -Luminance -0.08
+                "Opposite"          = Get-InvertedColor $theme.background
+                "HighContrast"      = Get-InvertedColor $theme.background
+            }
+        } else {
+            # NEED TO FIX INVERTED COLOR?
+            $themearray += [pscustomobject]@{
+                "Mode"              = $themeroot.Mode
+                "Enabled"           = "true"
+                "Main"              = Get-Shade -Hex $theme.background -Luminance 0.01
+                "MainSecondary"     = $theme.background
+                "MainGamma"         = Get-Shade -Hex $theme.background -Luminance -0.5
+                "MainDelta"         = Get-Shade -Hex $theme.background -Luminance -0.6
+                "OppositeSecondary" = Get-Shade -Hex $theme.background -Luminance -0.8
+                "Opposite"          = Get-Shade -Hex $theme.background -Luminance -0.9
+                "HighContrast"      = Get-InvertedColor $theme.background
+            }
         }
     }
     write-warning $filename
-    $themearray | ConvertTo-Json | Out-File -FilePath $filename
+    $themearray | ConvertTo-Json | Out-File -FilePath $filename -Encoding ascii
 }
