@@ -24,16 +24,21 @@ function New-NavSwitch ($nav, $item, [switch]$disabled) {
 
 function Get-Colors {
     $theme = Get-ActiveTheme
-    $themedir = Join-Path -Path $script:UDRoot -ChildPath themes
-    Get-Content -Path (Join-Path -Path $themedir -ChildPath "$theme.json") | ConvertFrom-Json
+    Get-Content -Path (Join-Path -Path (Get-ThemeFolder) -ChildPath "$theme.json") | ConvertFrom-Json
 }
 
 function Get-ActiveTheme {
     (Get-Content -Path (Join-Path -Path $script:UDRoot -ChildPath colors.json) | ConvertFrom-Json).Theme
 }
 
-function Set-ActiveTheme ($Data) {
-    [PSCustomObject]@{ Theme = $Data } | ConvertTo-Json | Out-File (Join-Path -Path $script:UDRoot -ChildPath colors.json)
+
+function Get-ThemeFolder {
+    Join-Path -Path $script:UDRoot -ChildPath themes
+}
+
+
+function Set-ActiveTheme ($Theme) {
+    [PSCustomObject]@{ Theme = $Theme } | ConvertTo-Json | Out-File (Join-Path -Path $script:UDRoot -ChildPath colors.json)
 }
 
 function Get-AllThemes {
