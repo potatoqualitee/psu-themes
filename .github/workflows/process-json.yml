@@ -20,6 +20,7 @@ jobs:
       run: |
         sudo snap install pastel
         npm install @playwright/test
+        npm install @playwright
         npx playwright install
 
     - name: Run things
