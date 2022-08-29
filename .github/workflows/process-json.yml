@@ -20,7 +20,7 @@ jobs:
 
     - name: Run things
       run: |
-        Get-ChildItem ./process-json.ps1 | Select-Object Name
+        Get-ChildItem ../../../process-json.ps1 | Select-Object Name
         Get-ChildItem ./screenshots.ps1 | Select-Object Name
         
         ./screenshots.ps1
