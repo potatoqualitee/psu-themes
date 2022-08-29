@@ -20,8 +20,9 @@ jobs:
 
     - name: Run things
       run: |
-        #./process-json.ps1
-        #./screenshots.ps1
-        Get-ChildItem ./screenshots.ps1
+        Get-ChildItem ./process-json.ps1 | Select-Object Name
+        Get-ChildItem ./screenshots.ps1 | Select-Object Name
+        
+        ./screenshots.ps1
         
           
