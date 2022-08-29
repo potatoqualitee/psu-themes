@@ -47,5 +47,16 @@
         "OppositeSecondary":  "#aeaca9",
         "Opposite":  "#a9a7a4",
         "HighContrast":  "#C2C0BE"
+    },
+    {
+        "Mode":  "light",
+        "Enabled":  "true",
+        "Main":  "#C9C8C6",
+        "MainSecondary":  "#C2C0BE",
+        "MainGamma":  "#5A5958",
+        "MainDelta":  "#1A1919",
+        "OppositeSecondary":  "#515356",
+        "Opposite":  "#56585B",
+        "HighContrast":  "#3d3f41"
     }
 ]

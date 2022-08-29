@@ -49,6 +49,17 @@
         "HighContrast":  "#1E1D18"
     },
     {
+        "Mode":  "dark",
+        "Enabled":  "true",
+        "Main":  "#0C0C0A",
+        "MainSecondary":  "#1E1D18",
+        "MainGamma":  "#A6A28F",
+        "MainDelta":  "#BCBAAC",
+        "OppositeSecondary":  "#EAE9E4",
+        "Opposite":  "#FFFFFF",
+        "HighContrast":  "#e1e2e7"
+    },
+    {
         "Mode":  "light",
         "Enabled":  "true",
         "Main":  "#e8e8ea",
@@ -58,5 +69,16 @@
         "OppositeSecondary":  "#020202",
         "Opposite":  "#000000",
         "HighContrast":  "#34332E"
+    },
+    {
+        "Mode":  "dark",
+        "Enabled":  "true",
+        "Main":  "#171715",
+        "MainSecondary":  "#34332E",
+        "MainGamma":  "#B5B4AC",
+        "MainDelta":  "#CDCCC7",
+        "OppositeSecondary":  "#FDFDFD",
+        "Opposite":  "#FFFFFF",
+        "HighContrast":  "#cbccd1"
     }
 ]

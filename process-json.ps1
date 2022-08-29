@@ -1,3 +1,4 @@
+. C:\github\psu-themes\Repository\dashboards\kbupdate\private\functions.ps1
 function Test-DarkColor {
     <#
     .SYNOPSIS
@@ -319,4 +320,13 @@ foreach ($themegroup in $themegroups) {
         }
     }
     $themearray | ConvertTo-Json | Out-File -FilePath $filename -Encoding ascii
+
+    foreach ($theme in (Get-AllThemes)) {
+        Set-ActiveTheme -Theme $theme
+        $image = Join-Path -Path (Get-ThemeFolder) -ChildPath $theme
+        npx playwright screenshot http://localhost:5000/ "$image-light.png" --wait-for-selector text=Table with Paging --color-scheme=light
+        npx playwright screenshot http://localhost:5000/ "$image-dark.png" --wait-for-selector text=Table with Paging --color-scheme dark
+
+        emulateDark: true
+    }
 }

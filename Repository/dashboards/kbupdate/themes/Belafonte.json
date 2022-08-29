@@ -51,6 +51,17 @@
     {
         "Mode":  "dark",
         "Enabled":  "true",
+        "Main":  "#131820",
+        "MainSecondary":  "#2A3345",
+        "MainGamma":  "#A6B1C9",
+        "MainDelta":  "#C5CDDC",
+        "OppositeSecondary":  "#FFFFFF",
+        "Opposite":  "#FFFFFF",
+        "HighContrast":  "#d5ccba"
+    },
+    {
+        "Mode":  "dark",
+        "Enabled":  "true",
         "Main":  "#160c13",
         "MainSecondary":  "#20111b",
         "MainGamma":  "#938a90",
@@ -58,5 +69,16 @@
         "OppositeSecondary":  "#c4e0ce",
         "Opposite":  "#bedcc8",
         "HighContrast":  "#DFEEE4"
+    },
+    {
+        "Mode":  "light",
+        "Enabled":  "true",
+        "Main":  "#E9F3EC",
+        "MainSecondary":  "#DFEEE4",
+        "MainGamma":  "#6C756F",
+        "MainDelta":  "#2F3230",
+        "OppositeSecondary":  "#3B1F31",
+        "Opposite":  "#412337",
+        "HighContrast":  "#20111b"
     }
 ]

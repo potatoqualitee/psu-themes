@@ -49,6 +49,17 @@
         "HighContrast":  "#E9E9E1"
     },
     {
+        "Mode":  "light",
+        "Enabled":  "true",
+        "Main":  "#EFEFEA",
+        "MainSecondary":  "#E9E9E1",
+        "MainGamma":  "#72726D",
+        "MainDelta":  "#31312F",
+        "OppositeSecondary":  "#272736",
+        "Opposite":  "#2C2C3B",
+        "HighContrast":  "#16161e"
+    },
+    {
         "Mode":  "dark",
         "Enabled":  "true",
         "Main":  "#14141d",
@@ -58,6 +69,17 @@
         "OppositeSecondary":  "#d5d3c1",
         "Opposite":  "#d0cfbb",
         "HighContrast":  "#E5E4D9"
+    },
+    {
+        "Mode":  "light",
+        "Enabled":  "true",
+        "Main":  "#EBEBE2",
+        "MainSecondary":  "#E5E4D9",
+        "MainGamma":  "#6F6F69",
+        "MainDelta":  "#2D2D2B",
+        "OppositeSecondary":  "#2A2C3E",
+        "Opposite":  "#2F3044",
+        "HighContrast":  "#1a1b26"
     },
     {
         "Mode":  "dark",
@@ -71,6 +93,17 @@
         "HighContrast":  "#DBD7C4"
     },
     {
+        "Mode":  "light",
+        "Enabled":  "true",
+        "Main":  "#E1DECE",
+        "MainSecondary":  "#DBD7C4",
+        "MainGamma":  "#67665C",
+        "MainDelta":  "#242420",
+        "OppositeSecondary":  "#333954",
+        "Opposite":  "#373D5B",
+        "HighContrast":  "#24283b"
+    },
+    {
         "Mode":  "dark",
         "Enabled":  "true",
         "Main":  "#191d2b",
@@ -80,5 +113,16 @@
         "OppositeSecondary":  "#d1cbb0",
         "Opposite":  "#cdc7aa",
         "HighContrast":  "#E0DCCA"
+    },
+    {
+        "Mode":  "light",
+        "Enabled":  "true",
+        "Main":  "#E6E2D4",
+        "MainSecondary":  "#E0DCCA",
+        "MainGamma":  "#6A6A5F",
+        "MainDelta":  "#272723",
+        "OppositeSecondary":  "#2E344F",
+        "Opposite":  "#323855",
+        "HighContrast":  "#1f2335"
     }
 ]

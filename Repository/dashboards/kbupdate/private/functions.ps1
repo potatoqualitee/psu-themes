@@ -3,7 +3,7 @@ function Get-Sidebar {
 }
 
 function Write-Sidebar ($Data) {
-    $Data | ConvertTo-Json | Out-File (Join-Path -Path $script:UDRoot -ChildPath nav.json)
+    $Data | ConvertTo-Json | Out-File (Join-Path -Path $script:UDRoot -ChildPath nav.json) -Encoding ascii
 }
 
 function New-NavItem {
@@ -38,7 +38,7 @@ function Get-ThemeFolder {
 
 
 function Set-ActiveTheme ($Theme) {
-    [PSCustomObject]@{ Theme = $Theme } | ConvertTo-Json | Out-File (Join-Path -Path $script:UDRoot -ChildPath colors.json)
+    [PSCustomObject]@{ Theme = $Theme } | ConvertTo-Json | Out-File (Join-Path -Path $script:UDRoot -ChildPath colors.json) -Encoding ascii
 }
 
 function Get-AllThemes {

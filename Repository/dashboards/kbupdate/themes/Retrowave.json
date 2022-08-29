@@ -50,7 +50,7 @@
     },
     {
         "Mode":  "light",
-        "Enabled":  "true",
+        "Enabled":  "false",
         "Main":  "#FAFAE7",
         "MainSecondary":  "#F8F7DA",
         "MainGamma":  "#777769",
