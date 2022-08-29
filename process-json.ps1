@@ -1,4 +1,4 @@
-. C:\github\psu-themes\Repository\dashboards\kbupdate\private\functions.ps1
+. $PSScriptRoot\private\functions.ps1
 function Test-DarkColor {
     <#
     .SYNOPSIS
