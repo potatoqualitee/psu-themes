@@ -25,10 +25,11 @@ jobs:
         npm install @playwright/test    
 
     - name: Run things
+    - uses: microsoft/playwright-github-action@v1
       run: |
         Get-ChildItem ../../../process-json.ps1 | Select-Object Name
         Get-ChildItem ./screenshots.ps1 | Select-Object Name
-        npx --yes playwright install --with-deps chromium
+        
         ./screenshots.ps1
         
           
