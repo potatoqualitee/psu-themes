@@ -19,7 +19,7 @@ jobs:
     - name: Install
       shell: bash
       run: |
-        npm install -D @playwright/test@1.15.2 @types/faker playwright@1.15.2
+        npm install -D @playwright/test @types/faker playwright
         npm install @playwright
         npx playwright install
 
