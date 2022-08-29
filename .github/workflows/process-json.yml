@@ -17,6 +17,7 @@ jobs:
       run: |
         sudo snap install pastel
         npx --yes playwright install --with-deps chromium
+        npm i -D @playwright/test
 
     - name: Run things
       run: |
