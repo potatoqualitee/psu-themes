@@ -168,6 +168,7 @@ function Get-ColorApi {
 
 $wintermthemes = Get-Content (Get-ChildItem -Recurse C:\github\psu-themes\*windows-terminal-themes.json) | ConvertFrom-Json
 #$wintermthemes = $wintermthemes | where-object name -eq "retrowave"
+#$wintermthemes = $wintermthemes | Select-Object -First 10
 
 $allthemes = @()
 foreach ($theme in $wintermthemes) {
@@ -251,32 +252,71 @@ foreach ($themegroup in $themegroups) {
         $theme = $themeroot.Theme
         if ((Test-DarkColor $theme.background)) {
             write-warning "$($theme.background) is dark"
+            $main = Get-Shade -Hex $theme.background -Luminance -0.03
+            $maingamma = Get-Shade -Hex $theme.background -Luminance 0.05
+            $maindelta = Get-Shade -Hex $theme.background -Luminance 0.3
+            $oppositesec = Get-Shade -Hex (Get-InvertedColor $theme.background) -Luminance -0.08
+            $opposite = Get-Shade -Hex (Get-InvertedColor $theme.background) -Luminance -0.1
+
             $themearray += [pscustomobject]@{
                 "Mode"              = $themeroot.Mode
                 "Enabled"           = "true"
-                "Main"              = Get-Shade -Hex $theme.background -Luminance -0.03
+                "Main"              = $main
                 "MainSecondary"     = $theme.background
-                "MainGamma"         = Get-Shade -Hex $theme.background -Luminance 0.05
-                "MainDelta"         = Get-Shade -Hex $theme.background -Luminance 0.3
-                "OppositeSecondary" = Get-Shade -Hex (Get-InvertedColor $theme.background) -Luminance -0.08
-                "Opposite"          = Get-Shade -Hex (Get-InvertedColor $theme.background) -Luminance -0.1
+                "MainGamma"         = $maingamma
+                "MainDelta"         = $maindelta
+                "OppositeSecondary" = $oppositesec
+                "Opposite"          = $opposite
                 "HighContrast"      = Get-InvertedColor $theme.background
             }
-        } else {
-            # NEED TO FIX INVERTED COLOR?
+            if ($themegroup.Group -notcontains "light") {
+                write-warning "Had to invent a light!"
+                $themearray += [pscustomobject]@{
+                    "Mode"              = "light"
+                    "Enabled"           = "true"
+                    "Main"              = Get-InvertedColor $main
+                    "MainSecondary"     = Get-InvertedColor $theme.background
+                    "MainGamma"         = Get-InvertedColor $maingamma
+                    "MainDelta"         = Get-InvertedColor $maindelta
+                    "OppositeSecondary" = Get-InvertedColor $oppositesec
+                    "Opposite"          = Get-InvertedColor $opposite
+                    "HighContrast"      = $theme.background
+                }
+            }
+        } else {            
+            $main = Get-Shade -Hex $theme.background -Luminance 0.01
+            $maingamma = Get-Shade -Hex $theme.background -Luminance -0.5
+            $maindelta = Get-Shade -Hex $theme.background -Luminance -0.6
+            $oppositesec = Get-Shade -Hex $theme.background -Luminance -0.8
+            $opposite = Get-Shade -Hex $theme.background -Luminance -0.9
+
             $themearray += [pscustomobject]@{
                 "Mode"              = $themeroot.Mode
                 "Enabled"           = "true"
-                "Main"              = Get-Shade -Hex $theme.background -Luminance 0.01
+                "Main"              = $main
                 "MainSecondary"     = $theme.background
-                "MainGamma"         = Get-Shade -Hex $theme.background -Luminance -0.5
-                "MainDelta"         = Get-Shade -Hex $theme.background -Luminance -0.6
-                "OppositeSecondary" = Get-Shade -Hex $theme.background -Luminance -0.8
-                "Opposite"          = Get-Shade -Hex $theme.background -Luminance -0.9
+                "MainGamma"         = $maingamma 
+                "MainDelta"         = $maindelta
+                "OppositeSecondary" = $oppositesec
+                "Opposite"          = $opposite
                 "HighContrast"      = Get-InvertedColor $theme.background
+            }
+            
+            if ($themegroup.Group -notcontains "dark") {
+                write-warning "Had to invent a dark!"
+                $themearray += [pscustomobject]@{
+                    "Mode"              = "dark"
+                    "Enabled"           = "true"
+                    "Main"              = Get-InvertedColor $main
+                    "MainSecondary"     = Get-InvertedColor $theme.background
+                    "MainGamma"         = Get-InvertedColor $maingamma
+                    "MainDelta"         = Get-InvertedColor $maindelta
+                    "OppositeSecondary" = Get-InvertedColor $oppositesec
+                    "Opposite"          = Get-InvertedColor $opposite
+                    "HighContrast"      = $theme.background
+                }
             }
         }
     }
-    write-warning $filename
     $themearray | ConvertTo-Json | Out-File -FilePath $filename -Encoding ascii
 }
