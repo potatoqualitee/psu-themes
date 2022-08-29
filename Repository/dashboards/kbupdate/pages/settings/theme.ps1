@@ -11,7 +11,7 @@ New-UDPage -Name Theme -Url /settings/theme -Content {
             $checked = $false
         }
         New-UDSwitch -Id $theme -Label $theme -Checked $checked -OnChange {
-            Set-ActiveTheme -Data $theme
+            Set-ActiveTheme -Theme $theme
         } -Color secondary
     }
 }
