@@ -2,6 +2,7 @@ on: push
 defaults:
   run:
     shell: pwsh
+    working-directory: /home/runner/work/psu-themes/psu-themes/Repository/dashboards/kbupdate
 
 jobs:
   process-json:
@@ -12,6 +13,15 @@ jobs:
     - name: Execute json downloader
       run: Invoke-WebRequest -Uri  https://www.atomcorp.dev/api/v1/themes -OutFile windows-terminal-themes.json
 
-    - name: Test
+    - name: Install
       run: |
-        sudo snap install pastel #./process-json.ps1
+        sudo snap install pastel
+        npx --yes playwright install --with-deps chromium
+
+    - name: Run things
+      run: |
+        #./process-json.ps1
+        #./screenshots.ps1
+        Get-ChildItem ./screenshots.ps1
+        
+          
