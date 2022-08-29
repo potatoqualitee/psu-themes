@@ -9,14 +9,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: microsoft/playwright-github-action@v1
+    - uses: actions/setup-node@v3
+      with:
+        node-version: lts/*
 
     - name: Execute json downloader
       run: Invoke-WebRequest -Uri  https://www.atomcorp.dev/api/v1/themes -OutFile windows-terminal-themes.json
 
     - name: Install
       run: |
-        sudo snap install pastel   
+        sudo snap install pastel
+        npm install -g playwright
+        npm install @playwright/test
+        npx --yes playwright install --with-deps chromium
 
     - name: Run things
       run: |
