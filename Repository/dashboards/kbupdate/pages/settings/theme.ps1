@@ -26,9 +26,9 @@ New-UDPage -Name Theme -Url /settings/theme -Content {
                         style           = @{ 
                             paddingRight = "26px"
                         }
-                    }
+                    } -ClassName "photo"
 
-                    New-UDImage -Url /assets/screenshots/$PSItem-dark.png -Width 256 -Height 144
+                    New-UDImage -Url /assets/screenshots/$PSItem-dark.png -Width 256 -Height 144 -ClassName "photo"
                 }
             } -Id $PSItem
         }
