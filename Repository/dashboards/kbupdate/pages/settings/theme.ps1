@@ -8,19 +8,10 @@ New-UDPage -Name Theme -Url /settings/theme -Content {
         } else {
             $checked = $false
         }
-        <#
-        New-UDSwitch -Id $theme -Label $theme -Checked $checked -OnChange {
-            Set-ActiveTheme -Theme $theme
-        } -Color secondary
-
-        New-UDTableColumn -Property "myColumn" -Render {
-            New-UDImage -Url $EventData.myColumn
-        }
-        #>
     }
     
     New-UDLayout -Columns 3 -Content {
-        Get-AllThemes | Select-Object -First 100 | ForEach-Object {
+        Get-AllThemes | ForEach-Object {
             New-UDElement -Tag div -Attributes @{
                 style   = @{
                     cursor       = "pointer"
