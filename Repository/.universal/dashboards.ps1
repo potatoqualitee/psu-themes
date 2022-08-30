@@ -1,1 +1,1 @@
-New-PSUDashboard -Name "kbupdate" -FilePath "dashboards\kbupdate\kbupdate.ps1" -BaseUrl "/" -Framework "UniversalDashboard:Latest" -SessionTimeout 0 -AutoDeploy
+New-PSUDashboard -Name "kbupdate" -FilePath $(Resolve-Path "dashboards\kbupdate\kbupdate.ps1") -BaseUrl "/" -Framework "UniversalDashboard:Latest" -SessionTimeout 0 -AutoDeploy
