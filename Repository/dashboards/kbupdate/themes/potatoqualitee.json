@@ -38,24 +38,13 @@
     "CyanHover": "#D84A91"
   },
   {
-    "Mode": "dim",
+    "Mode": "dark",
     "Enabled": true,
     "Main": "#22272e",
     "MainSecondary": "#2d333b",
     "MainGamma": "#373e47",
     "MainDelta": "#444c56",
     "Opposite": "#cdd9e5",
-    "OppositeSecondary": "#8b949e",
-    "HighContrast": "#ffffff"
-  },
-  {
-    "Mode": "dark",
-    "Enabled": false,
-    "Main": "#0d1117",
-    "MainSecondary": "#161b22",
-    "MainGamma": "#30363d",
-    "MainDelta": "#464f5a",
-    "Opposite": "#c9d1d9",
     "OppositeSecondary": "#8b949e",
     "HighContrast": "#ffffff"
   },

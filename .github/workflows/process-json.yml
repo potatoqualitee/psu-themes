@@ -16,17 +16,13 @@ jobs:
     - name: Install pastel
       run: sudo snap install pastel
 
-    - name: Install
-      shell: bash
+    - name: Install playwright
       run: |
         npm install -D @playwright/test playwright
         npx playwright install
 
     - name: Run things
       run: |
-        Get-ChildItem ../../../process-json.ps1 | Select-Object Name
-        Get-ChildItem ./screenshots.ps1 | Select-Object Name
-        
         ./screenshots.ps1
         
           
