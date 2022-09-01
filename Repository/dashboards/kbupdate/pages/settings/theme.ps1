@@ -26,21 +26,16 @@ New-UDPage -Name Theme -Url /settings/theme -Content {
                         }
                     } -Content {
                         New-UDCard -TitleAlignment Center -Title $PSItem -Content {
-                            New-UDImage -Url /assets/screenshots/$PSItem-light.png -Attributes @{
-                                style = @{
-                                    width = "75%"
-                                }
-                            }
+                            New-UDElement -Tag "center" -Content {
+                                New-UDImageZoom -Path /assets/screenshots/$PSItem-light.png -Zoom 3 -Delay 0 -Width 387 -Height 200
                             
-                            New-UDElement -Tag "div" -Attributes @{
-                                style = @{
-                                    "padding" = "10px"
+                                New-UDElement -Tag "div" -Attributes @{
+                                    style = @{
+                                        "padding" = "10px"
+                                    }
                                 }
-                            }
-                            New-UDImage -Url /assets/screenshots/$PSItem-dark.png -Attributes @{
-                                style = @{
-                                    width = "75%"
-                                }
+                            
+                                New-UDImageZoom -Path /assets/screenshots/$PSItem-dark.png -Zoom 3 -Delay 0 -Width 387 -Height 200
                             }
                         }
                     } -Id $PSItem
@@ -61,21 +56,16 @@ New-UDPage -Name Theme -Url /settings/theme -Content {
                         }
                     } -Content {
                         New-UDCard -TitleAlignment Center -Title $PSItem -Content {
-                            New-UDImage -Url /assets/screenshots/$PSItem-light.png -Attributes @{
-                                style = @{
-                                    width = "75%"
-                                }
-                            }
+                            New-UDElement -Tag "center" -Content {
+                                New-UDImageZoom -Path /assets/screenshots/$PSItem-light.png -Zoom 3 -Delay 0 -Width 387 -Height 200
                             
-                            New-UDElement -Tag "div" -Attributes @{
-                                style = @{
-                                    "padding" = "10px"
+                                New-UDElement -Tag "div" -Attributes @{
+                                    style = @{
+                                        "padding" = "10px"
+                                    }
                                 }
-                            }
-                            New-UDImage -Url /assets/screenshots/$PSItem-dark.png -Attributes @{
-                                style = @{
-                                    width = "75%"
-                                }
+                            
+                                New-UDImageZoom -Path /assets/screenshots/$PSItem-dark.png -Zoom 3 -Delay 0 -Width 387 -Height 200
                             }
                         }
                     } -Id $PSItem

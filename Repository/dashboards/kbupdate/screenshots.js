@@ -17,15 +17,19 @@ var { chromium } = require('playwright');
         [file].forEach(async function (themefile) {
             // launch chromium browser
             var browser = await chromium.launch({
-                headless: true,
-                viewport: {
-                    width: 1280, // 1280 in commit 1ee6578
-                    height: 720, // 720 in commit 1ee6578
-                }
+                headless: true
             });
             // creating viewport with dark mode enabled doesn't work on this site
             // just create an empty context
-            var context = await browser.newContext({});
+            //var context = await browser.newContext({});
+            // create new context with 1920×1080
+            var context = await browser.newContext({
+                viewport: {
+                    width: 1520,
+                    height: 790,
+                }
+            });
+
             // get basename of themefile
             var theme = path.basename(themefile, '.json');
             // connect to webpage
