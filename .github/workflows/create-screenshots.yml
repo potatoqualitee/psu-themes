@@ -49,6 +49,6 @@ jobs:
       uses: stefanzweifel/git-auto-commit-action@v4
       with:
         commit_message: uploading screenshots
-        file_pattern: *.png
+        file_pattern: "*.png"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
