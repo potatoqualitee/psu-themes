@@ -47,8 +47,6 @@ function Get-ColorApi {
 }
 
 $wintermthemes = Get-Content (Get-ChildItem -Recurse C:\github\psu-themes\*windows-terminal-themes.json) | ConvertFrom-Json
-#$wintermthemes = $wintermthemes | where-object name -eq "retrowave"
-#$wintermthemes = $wintermthemes | Select-Object -First 10
 
 $allthemes = @()
 foreach ($theme in $wintermthemes) {
@@ -149,7 +147,7 @@ foreach ($themegroup in $themegroups) {
                 "Opposite"          = $opposite
                 "HighContrast"      = Get-InvertedColor $theme.background
             }
-            if ($themegroup.Group -notcontains "light") {
+            if ($themegroup.Group.Mode -notcontains "light") {
                 $themearray += [pscustomobject]@{
                     "Mode"              = "light"
                     "Enabled"           = "true"
@@ -181,7 +179,7 @@ foreach ($themegroup in $themegroups) {
                 "HighContrast"      = Get-InvertedColor $theme.background
             }
             
-            if ($themegroup.Group -notcontains "dark") {
+            if ($themegroup.Group.Mode -notcontains "dark") {
                 $themearray += [pscustomobject]@{
                     "Mode"              = "dark"
                     "Enabled"           = "true"

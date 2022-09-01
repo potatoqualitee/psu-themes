@@ -52,33 +52,11 @@
         "Mode":  "dark",
         "Enabled":  "true",
         "Main":  "#000000",
-        "MainSecondary":  "#0B0B0B",
-        "MainGamma":  "#8D8D8D",
-        "MainDelta":  "#A7A7A7",
-        "OppositeSecondary":  "#DADADA",
-        "Opposite":  "#F3F3F3",
-        "HighContrast":  "#f4f4f4"
-    },
-    {
-        "Mode":  "dark",
-        "Enabled":  "true",
-        "Main":  "#000000",
         "MainSecondary":  "#101216",
         "MainGamma":  "#3f425b",
         "MainDelta":  "#535d72",
         "OppositeSecondary":  "#c0bba4",
         "Opposite":  "#bfbba4",
         "HighContrast":  "#EFEDE9"
-    },
-    {
-        "Mode":  "light",
-        "Enabled":  "true",
-        "Main":  "#FFFFFF",
-        "MainSecondary":  "#EFEDE9",
-        "MainGamma":  "#C0BDA4",
-        "MainDelta":  "#ACA28D",
-        "OppositeSecondary":  "#3F445B",
-        "Opposite":  "#40445B",
-        "HighContrast":  "#101216"
     }
 ]
