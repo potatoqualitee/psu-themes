@@ -1,0 +1,48 @@
+name: Screenshots
+on: 
+  workflow_dispatch:
+defaults:
+  run:
+    shell: pwsh
+    working-directory: /home/runner/work/psu-themes/psu-themes/Repository/dashboards/kbupdate
+
+jobs:
+  create-screenshots:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Execute json downloader
+      run: Invoke-WebRequest -Uri  https://www.atomcorp.dev/api/v1/themes -OutFile windows-terminal-themes.json
+
+    - name: Install pastel
+      run: sudo snap install pastel
+
+    - name: Install playwright
+      run: |
+        npm install -D @playwright/test playwright
+        npx playwright install
+
+    - name: Build and run container
+      working-directory: /home/runner/work/psu-themes/psu-themes
+      run: |
+        docker build . --tag=universal-persistent
+        docker run --name powershelluniversal --rm -d  -p 5000:5000/tcp universal-persistent:latest
+
+    - name: Sleep for 5
+      run: Start-Sleep 5
+
+    - name: Check it
+      run: (Invoke-WebRequest http://localhost:5000 -ErrorAction Stop).Content
+
+    - name: Generate screenshots
+      run: |
+        ./screenshots.ps1
+      
+    - name: 🪠 Upload db to artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: screenshots
+        path: "/home/runner/work/psu-themes/psu-themes/Repository/dashboards/kbupdate/assets/screenshots"
+        
+          

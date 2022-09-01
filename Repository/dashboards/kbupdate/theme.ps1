@@ -1,12 +1,41 @@
 $colors = Get-Colors
 $common = $colors | Where-Object Mode -eq common
 $dark = $colors | Where-Object Mode -eq dark
-$enabledthemes = $colors | Where-Object Enabled
+
+# add some defaults
+$light = $colors | Where-Object Mode -eq light
+if (-not $light) {
+    $colors += [pscustomobject]@{
+        "Mode"              = "light"
+        "Enabled"           = "true"
+        "Main"              = "#f6f8fa"
+        "MainSecondary"     = "#DEDEDE"
+        "MainGamma"         = "#B8B8C2"
+        "MainDelta"         = "#c6c8ca"
+        "Opposite"          = "#24292f"
+        "OppositeSecondary" = "#57606a"
+        "HighContrast"      = "#000000"
+    }
+}
+if (-not $dark) {
+    $colors += [pscustomobject]@{
+        "Mode"              = "dark"
+        "Enabled"           = "true"
+        "Main"              = "#0D0F31"
+        "MainSecondary"     = "#070825"
+        "MainGamma"         = "#454761"
+        "MainDelta"         = "#A2A2AA"
+        "Opposite"          = "#c9d1d9"
+        "OppositeSecondary" = "#8b949e"
+        "HighContrast"      = "#ffffff"
+    }
+    $dark = $colors | Where-Object Mode -eq dark
+}
 $shadows = @()
 1..25 | ForEach-Object { $shadows += "none" }
 $themes = @{}
 
-ForEach ($theme in $enabledthemes) {
+ForEach ($theme in $colors) {
     $themes += @{
         $theme.Mode = @{
             palette    = @{
@@ -26,9 +55,9 @@ ForEach ($theme in $enabledthemes) {
                     contrastText = $common.Black
                 }
                 secondary  = @{
-                    main         = $common.Pink
-                    dark         = $theme.PinkRGBA15
-                    light        = $common.PinkRGBA15
+                    main         = $common.Cyan
+                    dark         = $theme.CyanRGBA15
+                    light        = $common.CyanRGBA15
                     contrastText = $common.Black
                 }
                 warning    = @{
@@ -307,7 +336,7 @@ ForEach ($theme in $enabledthemes) {
                     }
                     containedSecondary = @{
                         '&:hover' = @{
-                            backgroundColor = $common.PinkHover
+                            backgroundColor = $common.CyanHover
                         }
                     }
                     containedInfo      = @{
@@ -344,9 +373,9 @@ ForEach ($theme in $enabledthemes) {
                         }
                     }
                     outlinedSecondary  = @{
-                        borderColor = $common.Pink
+                        borderColor = $common.Cyan
                         '&:hover'   = @{
-                            backgroundColor = $common.Pink
+                            backgroundColor = $common.Cyan
                         }
                     }
                     outlinedInfo       = @{

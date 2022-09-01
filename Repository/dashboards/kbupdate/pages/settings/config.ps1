@@ -1,1 +1,0 @@
-New-UDPage -Name Configuration -Url /settings/config -Content {}
