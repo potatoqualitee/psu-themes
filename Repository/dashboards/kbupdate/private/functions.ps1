@@ -192,8 +192,21 @@ function Test-DarkColor {
     param(
         [string[]]$Color
     )
-    $r, $g, $b = Get-Rgb $Color
-    $hsp = Get-Hsp $Color
+    
+    # Clean up
+    if ($first = $Color[1]) {
+        $cleanedcolor = $Color -join ","
+        if ($first -notmatch "rgb" -and $first -notmatch "\(") {
+            $cleanedcolor = "rgb($cleanedcolor)"
+        }
+    } else {
+        $cleanedcolor = "$Color"
+    }
+    $cleanedcolor = $cleanedcolor.Replace('#','')
+    $cleanedcolor = $cleanedcolor.Replace(' ','')
+
+    $r, $g, $b = Get-Rgb $cleanedcolor
+    $hsp = Get-Hsp $cleanedcolor
 
     # Using the HSP value, determine whether the color is light or dark
     if ($hsp -gt 127.5) {
@@ -203,4 +216,29 @@ function Test-DarkColor {
         $hsp | Write-Verbose
         return $true
     }
+}
+
+function Get-InvertedColor {
+    [cmdletbinding()]
+    param(
+        [Alias("Color")]
+        $Hex
+    )
+    
+    $hex = $hex -replace "#"
+    if ($hex.Length -eq 3) {
+        # if someone passed in a shortcut html, expand it
+        $hex = $hex[0] + $hex[0] + $hex[1] + $hex[1] + $hex[2] + $hex[2]
+    }
+
+    $rgb = "#"
+    for ($i = 0; $i -lt 3; $i++) {
+        $number = $i * 2
+        $what = $hex.substring($number, 2)
+        $c = [convert]::ToInt32($what, 16)
+        $opposite = (255 - $c)
+        $c = '{0:X4}' -f $opposite
+        $rgb += ("00" + $c).SubString($c.length)
+    }
+    -join $rgb
 }

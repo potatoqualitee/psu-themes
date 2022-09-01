@@ -1,4 +1,4 @@
-. $(Resolve-Path -Path $PSScriptRoot\private\functions.ps1)
+. $(Resolve-Path -Path $PSScriptRoot\Repository\dashboards\kbupdate\private\functions.ps1)
 function Get-Shade {
 <#
     Get-Shade -Hex "#69c" -Luminance 0      # returns "#6699cc"
@@ -18,13 +18,21 @@ function Get-Shade {
         # if someone passed in a shortcut html, expand it
         $hex = $hex[0] + $hex[0] + $hex[1] + $hex[1] + $hex[2] + $hex[2]
     }
+
     if ([double]$Luminance -lt 0) {
-        write-warning darken
-        pastel color $Hex | pastel darken $Luminance.Replace("-","") | pastel format hex
-        # pastel random | pastel mix red | pastel lighten 0.2 | pastel format hex
+        $new = pastel color $Hex | pastel darken $Luminance.Replace("-","") | pastel format hex
+        do {
+            $new = pastel color $new | pastel darken 0.01 | pastel format hex
+        }
+        until ((Test-Contrast -Color1 $Hex -Color2 $new) -or ($new -match "000000"))
+        $new
     } else {
-        write-warning lighten
-        pastel color $Hex | pastel mix white | pastel lighten $Luminance | pastel format hex
+        $new = pastel color $Hex | pastel lighten $Luminance.Replace("-","") | pastel format hex
+        do {
+            $new = pastel color $new | pastel lighten 0.01 | pastel format hex
+        }
+        until ((Test-Contrast -Color1 $Hex -Color2 $new) -or ($new -match "ffffff"))
+        $new
     }
 }
 
@@ -71,10 +79,11 @@ $themegroups = $allthemes | Group-Object -Property Name
 
 foreach ($themegroup in $themegroups) {
     $themename = $themegroup.Name
-    $filename = Join-Path -Path themes -ChildPath "$themename.json"
+    Write-Output "Processing $themename"
+    $resolved = Resolve-Path -Path "$PSScriptRoot\Repository\dashboards\kbupdate\themes"
+    $filename = Join-Path -Path $resolved -ChildPath "$themename.json"
     $theme = $themegroup.Group[0].Theme
     $themearray = @()
-    write-warning TOPS
     $yellow     = Get-Shade -Color $theme.yellow
     $red        = Get-Shade -Color $theme.red
     $green      = Get-Shade -Color $theme.green
@@ -123,7 +132,6 @@ foreach ($themegroup in $themegroups) {
     foreach ($themeroot in $themegroup.Group) {
         $theme = $themeroot.Theme
         if ((Test-DarkColor $theme.background)) {
-            write-warning "$($theme.background) is dark"
             $main = Get-Shade -Hex $theme.background -Luminance -0.03
             $maingamma = Get-Shade -Hex $theme.background -Luminance 0.05
             $maindelta = Get-Shade -Hex $theme.background -Luminance 0.3
@@ -142,7 +150,6 @@ foreach ($themegroup in $themegroups) {
                 "HighContrast"      = Get-InvertedColor $theme.background
             }
             if ($themegroup.Group -notcontains "light") {
-                write-warning "Had to invent a light!"
                 $themearray += [pscustomobject]@{
                     "Mode"              = "light"
                     "Enabled"           = "true"
@@ -175,7 +182,6 @@ foreach ($themegroup in $themegroups) {
             }
             
             if ($themegroup.Group -notcontains "dark") {
-                write-warning "Had to invent a dark!"
                 $themearray += [pscustomobject]@{
                     "Mode"              = "dark"
                     "Enabled"           = "true"

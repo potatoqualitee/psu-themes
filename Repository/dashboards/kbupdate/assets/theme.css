@@ -254,7 +254,3 @@ canvas {
 .card-header-none .MuiCardHeader-root {
 	display: none;
 }
-
-.active {
-	background-color: "#BBBBC4";
-}
