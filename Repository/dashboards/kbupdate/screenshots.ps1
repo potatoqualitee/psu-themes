@@ -1,6 +1,6 @@
 $global:UDRoot = $script:UDRoot = $PSScriptRoot
 . "$PSScriptRoot\private\functions.ps1"
-$files = Get-ChildItem "$PSScriptRoot\themes\*json" #| Select-Object -First 10
+$files = Get-ChildItem "$PSScriptRoot\themes\*json" | Select-Object -First 10
 
 foreach ($file in $files) {
     $theme = $file.BaseName
