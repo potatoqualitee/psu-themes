@@ -39,14 +39,14 @@ var { chromium } = require('playwright');
             await page.waitForSelector('text=Table with Paging');
             // take a screenshot
             var lightscreenshot = path.join(__dirname, 'assets', 'screenshots', `${theme}-light.png`);
-            await page.screenshot({ path: lightscreenshot, fullPage: true });
+            await page.screenshot({ path: lightscreenshot });
             // click the dark mode toggle
             await page.locator('header button').click();
             // wait for the page to load
             await page.waitForSelector('text=Table with Paging');
             // take a screenshot
             var darkscreenshot = path.join(__dirname, 'assets', 'screenshots', `${theme}-dark.png`);
-            await page.screenshot({ path: darkscreenshot, fullPage: true });
+            await page.screenshot({ path: darkscreenshot });
            
             await context.close();
             await browser.close();
