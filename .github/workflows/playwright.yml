@@ -10,12 +10,27 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: '14.x'
+
     - name: Install dependencies
       run: npm ci
+
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
+
+    - name: Build and run container
+      run: |
+        docker build . --tag=universal-persistent
+        docker run --name powershelluniversal --rm -d  -p 5000:5000/tcp universal-persistent:latest
+
+    - name: Sleep for 5
+      run: Start-Sleep 5
+
+    - name: Check it
+      run: (Invoke-WebRequest http://localhost:5000 -ErrorAction Stop).Content
+
     - name: Run Playwright tests
       run: npx playwright test
+      
     - uses: actions/upload-artifact@v2
       if: always()
       with:

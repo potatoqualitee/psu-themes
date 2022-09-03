@@ -17,8 +17,8 @@ test('Simulations page', async ({ page }) => {
             page.locator('div[role="button"]:has-text("Select Theme")').click();
             await expect(page).toHaveURL('http://localhost:5000/theme');
         } catch (ex) {
-            const screenshot = await page.screenshot()
-            await addAttach(screenshot, 'Screenshot at time of failure')
+            var png = "/tmp/screenshots/" + browserType + ".png";
+            await page.screenshot({ path: png });
             throw ex
         } finally {
             await browser.close();
