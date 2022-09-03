@@ -6,7 +6,7 @@ test('homepage has PowerShell in title and get started link linking to the intro
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/PowerShell Universal Dashboard/);
 
-  // Click div[role="button"]:has-text("Select Theme")
-  page.locator('div[role="button"]:has-text("Select Theme")').click();
-  await expect(page).toHaveURL('http://localhost:5000/theme');
+  // Expect a title "to contain" a substring.
+  //await expect(page).toContainText('Newsletter Signup');
+  await expect(page).toMatchText('Newsletter Signup');
 });
