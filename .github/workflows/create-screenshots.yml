@@ -4,7 +4,6 @@ on:
 defaults:
   run:
     shell: pwsh
-    working-directory: /home/runner/work/psu-themes/psu-themes/Repository/dashboards/kbupdate
 
 jobs:
   create-screenshots:
@@ -13,7 +12,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Execute json downloader
-      run: Invoke-WebRequest -Uri  https://www.atomcorp.dev/api/v1/themes -OutFile windows-terminal-themes.json
+      run: Invoke-WebRequest -Uri  https://www.atomcorp.dev/api/v1/themes -OutFile ./tools/windows-terminal-themes.json
 
     - name: Install pastel
       run: sudo snap install pastel
@@ -24,7 +23,6 @@ jobs:
         npx playwright install
 
     - name: Build and run container
-      working-directory: /home/runner/work/psu-themes/psu-themes
       run: |
         docker build . --tag=universal-persistent
         docker run --name powershelluniversal --rm -d  -p 5000:5000/tcp universal-persistent:latest
@@ -37,12 +35,12 @@ jobs:
 
     - name: Generate screenshots
       run: |
-        ./screenshots.ps1
+        ./tools/screenshots.ps1
       
     - name: 🪠 Upload db to artifact
       uses: actions/upload-artifact@v3
       with:
         name: screenshots
-        path: "/home/runner/work/psu-themes/psu-themes/Repository/dashboards/kbupdate/assets/screenshots"
+        path: "/home/runner/work/psu-themes/psu-themes/Repository/dashboards/psu-themes/assets/screenshots"
         
           

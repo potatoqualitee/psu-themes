@@ -16,7 +16,7 @@ $pages = Get-ChildItem (Join-Path -Path $PSScriptRoot -ChildPath pages) -Recurse
 $sidebar = . (Join-Path -Path $PSScriptRoot -ChildPath sidebar.ps1)
 
 $parms = @{
-    Title       = "kbupdate"
+    Title       = "psu-themes"
     StyleSheets = "/assets/theme.css"
     Theme       = $themes
     Pages       = $pages
