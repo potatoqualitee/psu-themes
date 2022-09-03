@@ -6,15 +6,6 @@ const config: PlaywrightTestConfig = {
   testDir: './tests',
   outputDir: './tests/results',
   reporter: 'list',
-  webServer: {
-    command: 'docker run --name powershelluniversal --rm -d  -p 5000:5000/tcp universal-persistent:latest',
-    reuseExistingServer: !process.env.CI,
-    url: 'http://localhost:5000',
-    env: {
-      NODE_ENV: 'test',
-      USE_BABEL_PLUGIN_ISTANBUL: '1',
-    },
-  },
   use: {
     trace: 'on-first-retry',
   },

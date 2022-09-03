@@ -1,18 +1,26 @@
-import type { Page } from '@playwright/test';
-import { test, expect } from './baseFixtures';
+const playwright = require('playwright');
 
-test.describe('Example Repo', () => {
-    test.beforeEach(async ({ page }) => {
-        await page.goto('http://localhost:5000/');
-    });
+(async () => {
+    for (const browserType of ['chromium', 'firefox', 'webkit']) {
+        const browser = await playwright[browserType].launch();
+        try {
+            const context = await browser.newContext();
+            const page = await context.newPage();
+            await page.goto('https://google.com');
+            await page.fill('input[name=q]', 'cheese');
+            await page.press('input[name=q]', 'Enter');
+            await page.waitForNavigation();
 
-    test('Should generate correct aria attributes', async ({ page }) => {
-        await page.waitForSelector('text=Table with Paging');
-        await expect(page).toHaveURL('http://localhost:5000/elements');
-    });
+            // page.waitForSelector('div#rso h3').then(firstResult => console.log(`${browserType}: ${firstResult.textContent()}`)).catch(error => console.error(`Waiting for result: ${error}`));
 
-    test('Should navigate on keyboard arrow left and arrow right when focused', async ({ page }) => {
-        await page.locator('div[role="button"]:has-text("Select Theme")').click();
-        await expect(page).toHaveURL('http://localhost:5000/theme');
-    });
-});
+            await page.waitForSelector('div#rso h3');
+            const firstResult = await page.$eval('div#rso h3', firstRes => firstRes.textContent);
+            console.log(`${browserType}: ${firstResult}`)
+        } catch (error) {
+            console.error(`Trying to run test on ${browserType}: ${error}`);
+        } finally {
+            await browser.close();
+        }
+    }
+    }
+})();
