@@ -1,13 +1,11 @@
 const playwright = require('playwright');
+const { test } = require('@playwright/test');
 import { expect } from '@playwright/test';
 
-(async () => {
+test('Simulations page', async ({ page }) => {
     for (const browserType of ['chromium', 'firefox', 'webkit']) {
         const browser = await playwright[browserType].launch();
         try {
-            const context = await browser.newContext();
-            const page = await context.newPage();
-
             await page.goto('http://localhost:5000/');
             page.waitForSelector('text=Table with Paging');
 
@@ -18,8 +16,10 @@ import { expect } from '@playwright/test';
             // Click div[role="button"]:has-text("Select Theme")
             page.locator('div[role="button"]:has-text("Select Theme")').click();
             await expect(page).toHaveURL('http://localhost:5000/theme');
-        } catch (error) {
-            console.error(`Trying to run test on ${browserType}: ${error}`);
+        } catch (ex) {
+            const screenshot = await page.screenshot()
+            await addAttach(screenshot, 'Screenshot at time of failure')
+            throw ex
         } finally {
             await browser.close();
         }
