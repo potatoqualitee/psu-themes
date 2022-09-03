@@ -10,9 +10,7 @@ const playwright = require('playwright');
             await page.fill('input[name=q]', 'cheese');
             await page.press('input[name=q]', 'Enter');
             await page.waitForNavigation();
-
-            // page.waitForSelector('div#rso h3').then(firstResult => console.log(`${browserType}: ${firstResult.textContent()}`)).catch(error => console.error(`Waiting for result: ${error}`));
-
+            
             await page.waitForSelector('div#rso h3');
             const firstResult = await page.$eval('div#rso h3', firstRes => firstRes.textContent);
             console.log(`${browserType}: ${firstResult}`)

@@ -1,0 +1,24 @@
+{
+  "name": "psu-themes",
+  "version": "1.0.0",
+  "description": "look this gorgeous thang. Thanks @st3phhays!",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/potatoqualitee/psu-themes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/potatoqualitee/psu-themes/issues"
+  },
+  "homepage": "https://github.com/potatoqualitee/psu-themes#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.25.1"
+  }
+}
