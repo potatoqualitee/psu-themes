@@ -2,7 +2,7 @@ $script:UDRoot = $PSScriptRoot
 $PSDefaultParameterValues["*:NavigationLayout"] = "Permanent"
 $PSDefaultParameterValues["*:Logo"] = "/assets/logo.png"
 
-Import-Module -Path (Join-Path -Path $PSScriptRoot -ChildPath init.psm1) -Force
+Import-Module (Resolve-Path -Path "$PSScriptRoot\private\UDImageZoom\0.0.1\UDImageZoom.psd1")
 
 Get-ChildItem (Join-Path -Path $PSScriptRoot -ChildPath private) -Recurse -File | ForEach-Object {
     . $PSItem.FullName
@@ -14,6 +14,7 @@ $pages = Get-ChildItem (Join-Path -Path $PSScriptRoot -ChildPath pages) -Recurse
 
 . (Join-Path -Path $PSScriptRoot -ChildPath theme.ps1)
 $sidebar = . (Join-Path -Path $PSScriptRoot -ChildPath sidebar.ps1)
+
 
 $parms = @{
     Title       = "psu-themes"
