@@ -24,7 +24,7 @@ jobs:
 
     - name: Build and run container
       run: |
-        docker build tools/Dockerfile --tag=universal-persistent
+        docker build . --tag=universal-persistent
         docker run --name powershelluniversal --rm -d  -p 5000:5000/tcp universal-persistent:latest
 
     - name: Sleep for 5
