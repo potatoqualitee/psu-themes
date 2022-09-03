@@ -173,37 +173,37 @@ New-UDPage -Name Sample -Url / -Content {
                     $Data = Get-Process | Sort-Object -Property CPU -Descending | Select-Object -First 10 
                     New-UDChartJS -Type 'doughnut' -Data $Data -DataProperty CPU -LabelProperty ProcessName -BackgroundColor @(
                         $common.Purple, 
-                        $common.PurpleHover,
+                        $theme.PurpleHover,
                         $common.Blue,
-                        $common.BlueHover,
+                        $theme.BlueHover,
                         $common.Green,
-                        $common.GreenHover,
+                        $theme.GreenHover,
                         $common.Red,
-                        $common.RedHover,
+                        $theme.RedHover,
                         $common.Yellow,
                         $common.Cyan
                     ) -BorderColor @(
                         $common.Purple,
-                        $common.PurpleHover,
+                        $theme.PurpleHover,
                         $common.Blue,
-                        $common.BlueHover,
+                        $theme.BlueHover,
                         $common.Green,
-                        $common.GreenHover,
+                        $theme.GreenHover,
                         $common.Red,
-                        $common.RedHover,
+                        $theme.RedHover,
                         $common.Yellow,
                         $common.Cyan
                     ) -HoverBackgroundColor @(
-                        $common.PurpleHover,
+                        $theme.PurpleHover,
                         $common.Purple,
-                        $common.BlueHover,
+                        $theme.BlueHover,
                         $common.Blue,
-                        $common.GreenHover,
+                        $theme.GreenHover,
                         $common.Green,
-                        $common.RedHover,
+                        $theme.RedHover,
                         $common.Red,
-                        $common.YellowHover,
-                        $common.CyanHover
+                        $theme.YellowHover,
+                        $theme.CyanHover
                     )
                 }
                 New-UDCard -Content {

@@ -331,32 +331,32 @@ ForEach ($theme in $colors) {
                     }
                     containedPrimary   = @{
                         '&:hover' = @{
-                            backgroundColor = $common.BlueHover
+                            backgroundColor = $theme.BlueHover
                         }
                     }
                     containedSecondary = @{
                         '&:hover' = @{
-                            backgroundColor = $common.CyanHover
+                            backgroundColor = $theme.CyanHover
                         }
                     }
                     containedInfo      = @{
                         '&:hover' = @{
-                            backgroundColor = $common.PurpleHover
+                            backgroundColor = $theme.PurpleHover
                         }
                     }
                     containedWarning   = @{
                         '&:hover' = @{
-                            backgroundColor = $common.YellowHover
+                            backgroundColor = $theme.YellowHover
                         }
                     }
                     containedError     = @{
                         '&:hover' = @{
-                            backgroundColor = $common.RedHover
+                            backgroundColor = $theme.RedHover
                         }
                     }
                     containedSuccess   = @{
                         '&:hover' = @{
-                            backgroundColor = $common.GreenHover
+                            backgroundColor = $theme.GreenHover
                         }
                     }
                     outlinedInherit    = @{
