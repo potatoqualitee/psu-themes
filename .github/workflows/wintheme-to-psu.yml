@@ -1,4 +1,4 @@
-name: Screenshots
+name: JSON Converter
 on: 
   workflow_dispatch:
 defaults:
