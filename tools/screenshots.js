@@ -3,7 +3,7 @@ var { chromium } = require('playwright');
 (async function () {
     var themeparam = process.argv[2];
     var root = process.argv[3];
-    
+
     var path = require('path');
     var fs = require('fs');
     var directoryPath = path.join(root, 'themes');
@@ -36,7 +36,7 @@ var { chromium } = require('playwright');
             var page = await context.newPage();
             await page.goto('http://localhost:5000');
             // wait for the page to load
-            await page.waitForSelector('text=Table with Paging');
+            await page.waitForLoadState('domcontentloaded');
             await page.waitForSelector('text=Table with Paging');
             // take a screenshot
             var lightscreenshot = path.join(root, 'assets', 'screenshots', `${theme}-light.png`);
@@ -44,7 +44,7 @@ var { chromium } = require('playwright');
             // click the dark mode toggle
             await page.locator('header button').click();
             // wait for the page to load
-            await page.waitForSelector('text=Table with Paging');
+            await page.waitForLoadState('domcontentloaded');
             await page.waitForSelector('text=Table with Paging');
             // take a screenshot
             var darkscreenshot = path.join(root, 'assets', 'screenshots', `${theme}-dark.png`);
