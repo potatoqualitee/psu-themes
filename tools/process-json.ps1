@@ -1,4 +1,4 @@
-. $(Resolve-Path -Path $PSScriptRoot\Repository\dashboards\kbupdate\private\functions.ps1)
+. $(Resolve-Path -Path $PSScriptRoot\Repository\dashboards\psu-themes\private\functions.ps1)
 function Get-Shade {
 <#
     Get-Shade -Hex "#69c" -Luminance 0      # returns "#6699cc"
@@ -46,7 +46,7 @@ function Get-ColorApi {
     Invoke-RestMethod "https://www.thecolorapi.com/scheme?hex=$Color&mode=monochrome&count=$Count&format=json"
 }
 
-$wintermthemes = Get-Content (Get-ChildItem -Recurse C:\github\psu-themes\*windows-terminal-themes.json) | ConvertFrom-Json
+$wintermthemes = Get-Content (Get-ChildItem -Recurse $PSScriptRoot\*windows-terminal-themes.json) | ConvertFrom-Json
 
 $allthemes = @()
 foreach ($theme in $wintermthemes) {
@@ -78,7 +78,7 @@ $themegroups = $allthemes | Group-Object -Property Name
 foreach ($themegroup in $themegroups) {
     $themename = $themegroup.Name
     Write-Output "Processing $themename"
-    $resolved = Resolve-Path -Path "$PSScriptRoot\Repository\dashboards\kbupdate\themes"
+    $resolved = Resolve-Path -Path "$PSScriptRoot\..\Repository\dashboards\psu-themes\themes"
     $filename = Join-Path -Path $resolved -ChildPath "$themename.json"
     $theme = $themegroup.Group[0].Theme
     $themearray = @()

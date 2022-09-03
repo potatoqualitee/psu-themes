@@ -1,4 +1,4 @@
-# Theme for kbupdate
+# Theme for psu-themes
 
 ## Approach
 
