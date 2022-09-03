@@ -1,0 +1,32 @@
+name: Simple tests
+on: 
+  push:
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  run-tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install playwright
+      run: |
+        npm install -D @playwright/test playwright
+        npx playwright install
+
+    - name: Build and run container
+      run: |
+        docker build tools/Dockerfile --tag=universal-persistent
+        docker run --name powershelluniversal --rm -d  -p 5000:5000/tcp universal-persistent:latest
+
+    - name: Sleep for 5
+      run: Start-Sleep 5
+
+    - name: Check it
+      run: (Invoke-WebRequest http://localhost:5000 -ErrorAction Stop).Content
+
+    - name: Simple tests
+      working-directory: ./tests
+      run: npx playwright test
