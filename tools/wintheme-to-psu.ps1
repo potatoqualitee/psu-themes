@@ -36,16 +36,6 @@ function Get-Shade {
     }
 }
 
-function Get-ColorApi {
-    [cmdletbinding()]
-    param(
-        $Color,
-        $Count = 4
-    )
-    $Color = $Color -replace '#'
-    Invoke-RestMethod "https://www.thecolorapi.com/scheme?hex=$Color&mode=monochrome&count=$Count&format=json"
-}
-
 $wintermthemes = Get-Content (Get-ChildItem -Recurse $PSScriptRoot\*windows-terminal-themes.json) | ConvertFrom-Json
 
 $allthemes = @()
