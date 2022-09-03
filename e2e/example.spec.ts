@@ -6,7 +6,7 @@ test('homepage has PowerShell in title and get started link linking to the intro
   // Expect a title "to contain" a substring.
   await expect(page).toHaveTitle(/PowerShell Universal Dashboard/);
 
-  // Expect a title "to contain" a substring.
-  //await expect(page).toContainText('Newsletter Signup');
-  await expect(page).toMatchText('Newsletter Signup');
+  await expect(page).toHaveURL('http://localhost:5000/theme');
+ // expect the text to say newsletter
+  
 });
