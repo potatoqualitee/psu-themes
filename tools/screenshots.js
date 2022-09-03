@@ -1,4 +1,3 @@
-// sleep for 25 seconds
 var { chromium } = require('playwright');
 
 (async function () {
