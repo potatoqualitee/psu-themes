@@ -22,5 +22,4 @@ const playwright = require('playwright');
             await browser.close();
         }
     }
-    }
 })();
