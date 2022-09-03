@@ -1,4 +1,5 @@
 const playwright = require('playwright');
+import { expect } from '@playwright/test';
 
 (async () => {
     for (const browserType of ['chromium', 'firefox', 'webkit']) {
@@ -6,14 +7,17 @@ const playwright = require('playwright');
         try {
             const context = await browser.newContext();
             const page = await context.newPage();
-            await page.goto('https://google.com');
-            await page.fill('input[name=q]', 'cheese');
-            await page.press('input[name=q]', 'Enter');
-            await page.waitForNavigation();
-            
-            await page.waitForSelector('div#rso h3');
-            const firstResult = await page.$eval('div#rso h3', firstRes => firstRes.textContent);
-            console.log(`${browserType}: ${firstResult}`)
+
+            await page.goto('http://localhost:5000/');
+            page.waitForSelector('text=Table with Paging');
+
+            // Click div[role="button"]:has-text("Elements")
+            page.locator('div[role="button"]:has-text("Elements")').click();
+            await expect(page).toHaveURL('http://localhost:5000/elements');
+
+            // Click div[role="button"]:has-text("Select Theme")
+            page.locator('div[role="button"]:has-text("Select Theme")').click();
+            await expect(page).toHaveURL('http://localhost:5000/theme');
         } catch (error) {
             console.error(`Trying to run test on ${browserType}: ${error}`);
         } finally {
