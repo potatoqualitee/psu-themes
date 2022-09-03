@@ -16,14 +16,14 @@
   {
     "Category": null,
     "Label": "Sidebar",
-    "Redirect": "/settings/sidebar",
+    "Redirect": "/sidebar",
     "Icon": "bars",
     "Enabled": true
   },
   {
     "Category": null,
-    "Label": "Theme",
-    "Redirect": "/settings/theme",
+    "Label": "Select Theme",
+    "Redirect": "/theme",
     "Icon": "air_freshener",
     "Enabled": true
   },
