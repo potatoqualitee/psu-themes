@@ -2,10 +2,11 @@ var { chromium } = require('playwright');
 
 (async function () {
     var themeparam = process.argv[2];
-
+    var root = process.argv[3];
+    
     var path = require('path');
     var fs = require('fs');
-    var directoryPath = path.join(__dirname, 'themes');
+    var directoryPath = path.join(root, 'themes');
     var file = path.join(directoryPath, `${themeparam}.json`);
     console.log("processing " + file);
 
@@ -38,7 +39,7 @@ var { chromium } = require('playwright');
             await page.waitForSelector('text=Table with Paging');
             await page.waitForSelector('text=Table with Paging');
             // take a screenshot
-            var lightscreenshot = path.join(__dirname, 'assets', 'screenshots', `${theme}-light.png`);
+            var lightscreenshot = path.join(root, 'assets', 'screenshots', `${theme}-light.png`);
             await page.screenshot({ path: lightscreenshot });
             // click the dark mode toggle
             await page.locator('header button').click();
@@ -46,7 +47,7 @@ var { chromium } = require('playwright');
             await page.waitForSelector('text=Table with Paging');
             await page.waitForSelector('text=Table with Paging');
             // take a screenshot
-            var darkscreenshot = path.join(__dirname, 'assets', 'screenshots', `${theme}-dark.png`);
+            var darkscreenshot = path.join(root, 'assets', 'screenshots', `${theme}-dark.png`);
             await page.screenshot({ path: darkscreenshot });
 
             await context.close();
