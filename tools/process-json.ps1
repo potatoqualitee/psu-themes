@@ -1,4 +1,4 @@
-. $(Resolve-Path -Path $PSScriptRoot\Repository\dashboards\psu-themes\private\functions.ps1)
+. $(Resolve-Path -Path $PSScriptRoot\..\Repository\dashboards\psu-themes\private\functions.ps1)
 function Get-Shade {
 <#
     Get-Shade -Hex "#69c" -Luminance 0      # returns "#6699cc"
