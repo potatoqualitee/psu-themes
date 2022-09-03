@@ -1,7 +1,8 @@
 $global:UDRoot = $script:UDRoot = (Resolve-Path "$PSScriptRoot/../Repository/dashboards/psu-themes").Path
 
 . "$script:UDRoot\private\functions.ps1"
-$files = Get-ChildItem "$script:UDRoot\themes\*json" | Where-Object BaseName -in "Obsidian","PaulMillr", "Tokyo"
+$files = Get-ChildItem "$script:UDRoot\themes\*json" | Select-Object -First 10
+# Where-Object BaseName -in "Obsidian","PaulMillr", "Tokyo"
 
 foreach ($file in $files) {
     $theme = $file.BaseName
